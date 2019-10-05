@@ -9,6 +9,7 @@ import routes from "./routes";
 import * as path from "path";
 
 const PORT = process.env.PORT || 3001;
+const webURL = "/web";
 
 createConnection()
   .then(async connection => {
@@ -19,9 +20,9 @@ createConnection()
     app.use(bodyParser.json());
 
     if(process.env.NODE_ENV.trim() === "production"){
-      app.use('/static', express.static(path.join(__dirname, '../', 'src', 'public')));
+      app.use(webURL, express.static(path.join(__dirname, '../', 'src', 'public')));
     }else{
-      app.use('/static', express.static(path.join(__dirname, 'public')));
+      app.use(webURL, express.static(path.join(__dirname, 'public')));
     }
     
     app.use("/api", routes);
