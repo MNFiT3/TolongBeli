@@ -1,12 +1,15 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
-export class User {
+export class Deliverer {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
     @Column({
         type: 'simple-json'
     })
-    address: any;
+    vehicle: any;
+
+    @Column()
+    isApproved: boolean;
 }
