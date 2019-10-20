@@ -17,6 +17,7 @@ createConnection()
 
     app.use(cors());
     app.use(helmet());
+    app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
 
     if(process.env.NODE_ENV.trim() === "production"){

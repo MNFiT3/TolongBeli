@@ -1,14 +1,18 @@
-
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
-import { validate } from "class-validator";
 
 class TestController {
 
-    static test = async (req: Request, res: Response) => {
+    static get = async (req: Request, res: Response) => {
         const data = req.params;
-        console.log("asdads")
-        res.send("data");
+        console.log(data)
+        res.json(data);
+    }
+
+    static post = async (req: Request, res: Response) => {
+        const data = req.body;
+        console.log(data)
+        res.json(data);
     }
 };
 
