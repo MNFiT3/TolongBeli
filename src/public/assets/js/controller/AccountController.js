@@ -4,8 +4,8 @@ class AccountController {
         
     }
 
-    login(formData, callback) { 
-        var json = jsonForm(formData);
+    login(formName, callback) { 
+        var json = jsonForm($(formName).serializeArray());
         serv.httpPost('/test/post', json, callback);
     }
 }
