@@ -17,24 +17,17 @@
 
     <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/js/controller/ServerController.js"></script>
     <script>
+        const serv = new ServerController();
         const test = () => {
-            httpGet('https://jsonplaceholder.typicode.com/todos/1', (err, result) => {
+            serv.httpGet('https://jsonplaceholder.typicode.com/todos/1', (err, result) => {
+                if (err){
+                    console.log(err)
+                    return;
+                }
                 console.log(result)
             });
-        }
-
-        const httpGet = (url, callback) => {
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    callback(null, JSON.parse(this.responseText));
-                }else{
-                    callback("Error occured");
-                }
-            };
-            xmlhttp.open("GET", url, true);
-            xmlhttp.send();
         }
     </script>
 </body>
