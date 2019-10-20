@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Registration</title>
+
+    <link rel="icon" href="tolongBeli2.png">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+    <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+
+    <div class="container">
+        <div class="card mt-5 shadow p-3 mb-5 bg-white rounded">
+            <div class="card-body">
+                <div class="logocontainer" align="center">
+                    <img src="tolongBeli1.png" alt="logo" class="logo" width="30%">
+                </div><br />
+                <form action="/action_page.php" method="post">
+                    <div class="row">
+                        <!-- input username -->
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <b>Username</b>
+                                <input class="form-control" type="text" placeholder="Enter username" name="uname"
+                                    required><br />
+                            </div>
+                        </div>
+                        <!-- input password -->
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <b>Password</b>
+                                <input class="form-control" type="password" placeholder="Enter password" name="psw"
+                                    required><br />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- input phone -->
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <b>Phone Number</b>
+                                <input class="form-control" type="text" placeholder="eg. 01136177261" name="phone"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <!-- input IC -->
+                            <div class="form-group">
+                                <b>Identification Card (IC)</b>
+                                <input class="form-control" type="text" placeholder="eg. 123456161342" name="ic"
+                                    required><br />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- input plate number -->
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <b>Vehicle Plate Number</b>
+                                <input class="form-control" type="text" placeholder="eg. WWW1234" name="plate"
+                                    required><br />
+                            </div>
+                        </div>
+                        <!-- upload image of rider -->
+                        <div class="col-sm">
+                            <b>Rider Picture</b>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="inputGroupFile01"
+                                        aria-describedby="inputGroupFileAddon01">
+                                    <label class="custom-file-label" for="inputGroupFile01">Full face only</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--https://mdbootstrap.com/docs/jquery/forms/file-input-->
+                    <!-- upload image of vehicle -->
+                    <div class="row">
+                        <div class="col-sm">
+                            <b>Vehicle Picture</b>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="inputGroupFile01"
+                                        aria-describedby="inputGroupFileAddon01">
+                                    <label class="custom-file-label" for="inputGroupFile01">Include plate number</label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- upload image of license -->
+                        <div class="col-sm">
+                            <b>License Picture</b>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="inputGroupFile01"
+                                        aria-describedby="inputGroupFileAddon01">
+                                    <label class="custom-file-label" for="inputGroupFile01">Front only</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div><br />
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="text-right">
+                                <a href="riderLogin.html" class="btn theme-color-0 btn-lg active" role="button"
+                                    aria-pressed="true">Back</a>
+                                <button class="btn theme-color-0 btn-lg active" type="submit">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    </form>
+</body>
+
+</html>

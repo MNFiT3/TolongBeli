@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Registration</title>
+
+    <link rel="icon" href="tolongBeli2.png">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+    <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+
+    <div class="container">
+        <div class="card mt-5 shadow p-3 mb-5 bg-white rounded">
+            <div class="card-body">
+                <div class="logocontainer" align="center">
+                    <img src="tolongBeli1.png" alt="logo" class="logo" width="30%">
+                </div><br />
+                <form action="/action_page.php" method="post">
+                    <div class="row">
+                        <!-- input username -->
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <b>Username</b>
+                                <input class="form-control" type="text" placeholder="Enter username" name="uname"
+                                    required><br />
+                            </div>
+                        </div>
+                        <!-- input password -->
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <b>Password</b>
+                                <input class="form-control" type="password" placeholder="Enter password" name="psw"
+                                    required><br />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- input number -->
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <b>Phone Number</b>
+                                <input class="form-control" type="text" placeholder="Enter phone number" name="num"
+                                    required>
+                            </div>
+                        </div>
+                        <!-- input address -->
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <b>Home Address</b>
+                                <textarea class="form-control" name="addr" placeholder="Enter full address"
+                                    required></textarea>
+                            </div>
+                        </div>
+                    </div><br />
+                    <!-- button back and register -->
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="text-right">
+                                <a href="userLogin.html" class="btn theme-color-0 btn-lg active" role="button"
+                                    aria-pressed="true">Back</a>
+                                <button class="btn theme-color-0 btn-lg active" type="submit">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    </form>
+</body>
+
+</html>

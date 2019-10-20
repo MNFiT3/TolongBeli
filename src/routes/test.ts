@@ -6,6 +6,7 @@ import TestController from "../controllers/TestController";
 
 const router = Router();
 
-router.get("/", TestController.test);
+router.get("/get", TestController.get);
+router.post("/post", TestController.post);
 
 export default router;
