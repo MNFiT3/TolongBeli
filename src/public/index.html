@@ -3,11 +3,10 @@
 
 <head>
     <title>TolongBeli</title>
-
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
+<body onload='test()'>
     <div class="container">
         <div class="col"></div>
         <div class="col">
@@ -18,6 +17,26 @@
 
     <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <script>
+        const test = () => {
+            httpGet('https://jsonplaceholder.typicode.com/todos/1', (err, result) => {
+                console.log(result)
+            });
+        }
+
+        const httpGet = (url, callback) => {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    callback(null, JSON.parse(this.responseText));
+                }else{
+                    callback("Error occured");
+                }
+            };
+            xmlhttp.open("GET", url, true);
+            xmlhttp.send();
+        }
+    </script>
 </body>
 
 </html>
