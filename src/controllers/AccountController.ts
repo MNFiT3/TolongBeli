@@ -45,14 +45,13 @@ class AccountController {
         account.email = email;
         account.username = username;
 
-        bcrypt.hash(password, SALT_ROUNDS, function (err, hash) {
+        bcrypt.hash(password, SALT_ROUNDS, (err, hash) => {
             if (err) {
                 res.send("Server error");
                 return;
             }
 
             account.password = hash;
-
 
             getRepository(Account).save(account).then(rs => {
                 if (scope == 'user') {
@@ -79,7 +78,7 @@ class AccountController {
                     }
                     getRepository(Deliverer).save(deliverer);
 
-                    res.send("Successfully registered. Wait for approval");
+                    res.send("Successfully registered. Please wait for approval from administrator");
                     return;
                 }
             }).catch(err => {
@@ -89,9 +88,42 @@ class AccountController {
                 }
             })
         });
+    }
 
+    static login = async (req: Request, res: Response) => {
+        const { email, password } = req.body;
 
+        if(!(email && password)){
+            res.send("Missing attributes");
+            return;
+        }
 
+        getRepository(Account).findOneOrFail({email: email}, {relations: ['deliverer']}).then(rs => {
+            bcrypt.compare(password, rs.password, (err, result) => {
+                if(err){
+                    res.send(err);
+                    return;
+                }
+                
+                if(!result){
+                    res.send("Wrong password");
+                    return;
+                }
+
+                res.json({
+                    message: "Login success",
+                    userData: {
+                        email: rs.email,
+                        username: rs.username,
+                        scope: rs.scope,
+                        isApproved: (rs.scope == 'deliverer')? rs.deliverer.isApproved : null
+                    }
+                })
+            })
+        }).catch(err => {
+            res.send("User with the email is not exists");
+            return;
+        })
     }
 }
 export default AccountController;
