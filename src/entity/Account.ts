@@ -9,6 +9,9 @@ export class Account {
     id: string;
 
     @Column()
+    scope: string;
+
+    @Column()
     email: string;
 
     @Column()
