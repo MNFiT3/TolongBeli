@@ -44,14 +44,11 @@
     
     <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="assets/js/controller/UtilsController.js"></script>
-    <script type="text/javascript" src="assets/js/controller/AccountController.js"></script>
+    <script type="text/javascript" src="assets/controller/UtilsController.js"></script>
+    <script type="text/javascript" src="assets/controller/AccountController.js"></script>
     <script>
         const send = () =>{
-            new AccountController().login('form', (err, result) => {
-                if(err) return;
-                alert(result)
-            });
+            new AccountController().login('form', null);
         }
     </script>
 </body>
