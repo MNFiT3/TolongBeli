@@ -13,6 +13,7 @@
     "@types/cors": "^2.8.6",
     "@types/helmet": "0.0.44",
     "@types/jsonwebtoken": "^8.3.5",
+    "bcrypt": "^3.0.6",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "class-validator": "^0.10.2",
@@ -24,11 +25,11 @@
     "memory-cache": "^0.2.0",
     "mysql": "^2.17.1",
     "reflect-metadata": "^0.1.13",
+    "sqlite3": "^4.1.0",
     "ts-node-dev": "^1.0.0-pre.32",
     "typeorm": "0.2.20",
     "typescript": "^3.5.3",
-    "uuidv4": "^5.0.1",
-    "sqlite3": "^4.1.0"
+    "uuidv4": "^5.0.1"
   },
   "scripts": {
     "tsc": "tsc",
