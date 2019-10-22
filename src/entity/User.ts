@@ -14,7 +14,7 @@ export class User {
 
     @Column({
         type: 'simple-json',
-        nullable: false
+        nullable: true
     })
     json: any;
 

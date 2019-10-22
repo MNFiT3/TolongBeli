@@ -17,7 +17,7 @@ export class Deliverer {
 
     @Column({
         type: 'simple-json',
-        nullable: false
+        nullable: true
     })
     json: any;
     

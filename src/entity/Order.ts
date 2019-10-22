@@ -19,7 +19,7 @@ export class Order {
 
     @Column({
         type: 'simple-json',
-        nullable: false
+        nullable: true
     })
     json: any;
 

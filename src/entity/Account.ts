@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from 'typeorm';
-import { AccountType } from './AccountType';
 import { User } from './User';
 import { Deliverer } from './Deliverer';
 
@@ -11,7 +10,9 @@ export class Account {
     @Column()
     scope: string;
 
-    @Column()
+    @Column({
+        unique: true
+    })
     email: string;
 
     @Column()
@@ -22,13 +23,9 @@ export class Account {
 
     @Column({
         type: 'simple-json',
-        nullable: false
+        nullable: true
     })
     json: any;
-
-    @OneToOne(type => AccountType, accountType => accountType.account)
-    @JoinColumn()
-    accountType: AccountType;
 
     @OneToOne(type => User, user => user.account)
     user: User;

@@ -13,7 +13,8 @@ export class Grocery {
     price: number;
 
     @Column({
-        type: 'simple-json'
+        type: 'simple-json',
+        nullable: true
     })
     json: any;
 
