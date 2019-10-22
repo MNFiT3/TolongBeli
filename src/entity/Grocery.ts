@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany } from 'typeorm';
+import { ItemList } from './ItemList';
 
 @Entity()
 export class Grocery {
@@ -12,7 +13,11 @@ export class Grocery {
     price: number;
 
     @Column({
-        type: 'simple-json'
+        type: 'simple-json',
+        nullable: true
     })
     json: any;
+
+    @OneToMany(type => ItemList, itemList => itemList.grocery)
+    itemList: ItemList[];
 }
