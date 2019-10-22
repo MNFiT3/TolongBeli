@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { Deliverer } from "../entity/Deliverer";
 import e = require("express");
+import { Grocery } from "../entity/Grocery";
 
 class AdminController {
 
@@ -68,6 +69,32 @@ class AdminController {
 
         }).catch(err => {
             res.send("Deliverer id not found");
+            return;
+        })
+    }
+
+    static addGrocery = async (req: Request, res: Response) => {
+        const { name, category, price, description } = req.body;
+
+        if(!name && !price){
+            res.send("Missing attributes");
+            return;
+        }
+
+        var newGrocery = new Grocery();
+        newGrocery.name = name;
+        newGrocery.price = price.replace('.', '');
+        newGrocery.json = {
+            category: category || "",
+            description: description || "",
+            image: ""
+        }
+
+        getRepository(Grocery).save(newGrocery).then(rs => {
+            res.send("Successfully added " + rs.name);
+            return;
+        }).catch(err => {
+            res.send(err);
             return;
         })
     }

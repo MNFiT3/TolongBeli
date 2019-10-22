@@ -5,7 +5,9 @@ import AdminController from "../controllers/AdminController";
 
 const router = Router();
 
-router.post("/view/deliverer/", AdminController.viewDeliverer)
+router.post("/add/grocery", AdminController.addGrocery)
+
+router.post("/view/deliverer/", AdminController.viewDeliverer);
 
 router.post("/validate/deliverer", AdminController.validateDeliverer);
 
