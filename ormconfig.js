@@ -1,11 +1,19 @@
 var dir = 'src';
-if(process.env.NODE_ENV.trim() == 'production'){
+if (process.env.NODE_ENV.trim() == 'production') {
    dir = 'build';
 }
 
-module.exports =  {
-   "type": "sqlite",
-   "database": "database.sqlite",
+var env = process.env;
+module.exports = {
+   "type": "postgres",
+   "host": env.DB_HOST,
+   "port": env.DB_PORT,
+   "username": env.DB_USER,
+   "password": env.DB_PASS,
+   "database": env.DB_NAME,
+   extra: {
+      ssl: true
+   },
    "synchronize": true,
    "logging": false,
    "entities": [
