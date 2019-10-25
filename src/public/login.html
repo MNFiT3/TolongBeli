@@ -11,17 +11,13 @@
 </head>
 
 <body>
-
-    <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-
     <div class="container">
         <div class="card mt-5 shadow p-3 mb-5 bg-white rounded">
             <div class="card-body">
                 <div class="logocontainer" align="center">
                     <img src="tolongBeli1.png" alt="logo" class="logo" width="30%">
                 </div><br />
-                <form action="/action_page.php" method="post">
+                <form>
                     <!-- input username -->
                     <div class="form-group">
                         <b>Username</b>
@@ -36,15 +32,23 @@
                     </div>
                     <!-- button home and login -->
                     <div class="text-right">
-                        <button class="btn theme-color-0 btn-lg active" type="submit">Login</button>
+                        <button class="btn theme-color-0 btn-lg active" type="button" onclick="login()">Login</button>
                     </div>
-
                 </form>
             </div>
         </div>
     </div>
-
-    </form>
+    <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/controller/UtilsController.js"></script>
+    <script type="text/javascript" src="assets/controller/AccountController.js"></script>
+    <script>
+        const login = () =>{
+            new AccountController().login("form", (result) => {
+                alert(result);
+            })
+        }
+    </script>
 </body>
 
 </html>
