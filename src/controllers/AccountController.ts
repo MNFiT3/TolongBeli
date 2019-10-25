@@ -58,6 +58,12 @@ class AccountController {
                     var user = new User();
                     user.account = rs;
                     user.address = address;
+                    user.json = {
+                        status: {
+                            message: "Active User",
+                            code: 100
+                        }
+                    }
 
                     getRepository(User).save(user);
 
@@ -72,6 +78,10 @@ class AccountController {
                         plateNumber: plateNumber
                     };
                     deliverer.json = {
+                        status: {
+                            message: "Pending confirmation",
+                            code: 101
+                        },
                         documents: {
                             ic: ic
                         }
