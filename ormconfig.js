@@ -14,7 +14,9 @@ if (env.NODE_ENV.trim() == 'production') {
    ormconfig["port"] = env.DB_PORT;
    ormconfig["username"] = env.DB_USER;
    ormconfig["password"] = env.DB_PASS;
+   ormconfig["database"] = env.DB_NAME;
    ormconfig["extra"] = { ssl: true };
+   
 }else{
    ormconfig["type"] = "sqlite";
    ormconfig["database"] = "database.sqlite";
