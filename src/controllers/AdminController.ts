@@ -18,11 +18,15 @@ class AdminController {
             }
         };
 
-        if(option == "byId" && delivererID){
+        if(option == "byId"){
+            if(!delivererID){
+                res.send("Missing deliverer ID");
+                return;
+            }
             dynamicSQL['where'] = { id: delivererID };
-        }else if(option == "byApproval_false" && delivererID){
+        }else if(option == "byApproval_false"){
             dynamicSQL['where'] = { isApproved: false };
-        }else if(option == "byApproval_true" && delivererID){
+        }else if(option == "byApproval_true"){
             dynamicSQL['where'] = { isApproved: true };
         }else{
             res.send("Missing option");
@@ -85,6 +89,7 @@ class AdminController {
         newGrocery.name = name;
         newGrocery.price = price.replace('.', '');
         newGrocery.json = {
+            status: "Listed",
             category: category || "",
             description: description || "",
             image: ""
@@ -93,6 +98,56 @@ class AdminController {
         getRepository(Grocery).save(newGrocery).then(rs => {
             res.send("Successfully added " + rs.name);
             return;
+        }).catch(err => {
+            res.send(err);
+            return;
+        })
+    }
+
+    static updateGrocery = async (req: Request, res: Response) => {
+        const { itemID, action, itemName, itemPrice, itemJson } = req.body;
+
+        if(!(itemID && action)){
+            res.send("Missing required attribute(s)");
+            return;
+        }
+
+        getRepository(Grocery).findOneOrFail({ id: itemID }).then(item => {
+
+            if(action == "delete"){
+                item.json.status = "Unlisted"
+            }else if(action == "restore") {
+                item.json.status = "Listed"
+            }else if(action == "update"){
+                if(!(itemName && itemPrice)){
+                    res.send("Missing update attributes");
+                    return;
+                }
+
+                //Copy original object.
+                const oriJson = JSON.parse(JSON.stringify(item.json));
+
+                item.name = itemName;
+                item.price = itemPrice;
+                item.json = {
+                    status: itemJson.status || oriJson.status,
+                    category: itemJson.category || oriJson.category,
+                    description: itemJson.description || oriJson.description,
+                    image: itemJson.image || oriJson.image
+                }
+            }else{
+                res.send("Action out of scope");
+                return;
+            }
+
+            getRepository(Grocery).save(item).then(rs => {
+                res.send("Edit grocery success");
+                return;
+            }).catch(err => {
+                res.send(err);
+                return;
+            })
+
         }).catch(err => {
             res.send(err);
             return;

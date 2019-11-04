@@ -1,28 +1,45 @@
-var env = process.env;
 var dir = 'src';
+var extension = '.ts';
 
 var ormconfig = {
    "synchronize": true,
    "logging": false
 }
 
-if (env.NODE_ENV.trim() == 'production') {
+if (process.env.NODE_ENV.trim() == 'production') {
    dir = 'build';
+   extension = '.js';
 
-   ormconfig["type"] = "postgres";
-   ormconfig["host"] = env.DB_HOST;
-   ormconfig["port"] = env.DB_PORT;
-   ormconfig["username"] = env.DB_USER;
-   ormconfig["password"] = env.DB_PASS;
-   ormconfig["extra"] = { ssl: true };
+   ormconfig["type"] = "mysql";
+   ormconfig["host"] = process.env.DB_HOST;
+   ormconfig["port"] = process.env.DB_PORT;
+   ormconfig["username"] = process.env.DB_USERNAME;
+   ormconfig["password"] = process.env.DB_PASSWORD;
+   ormconfig["database"] = process.env.DB_NAME;
+   //ormconfig["extra"] = { ssl: true };
+
 }else{
-   ormconfig["type"] = "sqlite";
+   // ormconfig["type"] = "mysql";
+   // ormconfig["host"] = "localhost";
+   // ormconfig["port"] = "3306";
+   // ormconfig["username"] = "root";
+   // ormconfig["password"] = "root";
+   // ormconfig["database"] = "tolongbeli";
+
+   //Sqlite
    ormconfig["database"] = "database.sqlite";
+   ormconfig["type"] = "sqlite";
 }
 
-ormconfig["entities"] = [dir + "/entity/**/*.ts"];
-ormconfig["migrations"] = [dir + "/migration/**/*.ts"];
-ormconfig["subscribers"] = [dir + "/subscriber/**/*.ts"];
+ormconfig["entities"] = [
+   dir + "/entity/**/*" + extension
+];
+ormconfig["migrations"] = [
+   dir + "/migration/**/*" + extension
+];
+ormconfig["subscribers"] = [
+   dir + "/subscriber/**/*" + extension
+];
 ormconfig["cli"] = {
    "entitiesDir": dir + "/entity",
    "migrationsDir": dir + "/migration",
