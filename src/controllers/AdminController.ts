@@ -8,11 +8,6 @@ class AdminController {
 
     static viewDeliverer = async (req: Request, res: Response) => {
         const { option,  delivererID } = req.body;
-
-        if(!delivererID){
-            res.send("Missing deliverer ID");
-            return;
-        }
         
         var dynamicSQL = {
             join: {
@@ -24,6 +19,10 @@ class AdminController {
         };
 
         if(option == "byId"){
+            if(!delivererID){
+                res.send("Missing deliverer ID");
+                return;
+            }
             dynamicSQL['where'] = { id: delivererID };
         }else if(option == "byApproval_false"){
             dynamicSQL['where'] = { isApproved: false };
@@ -105,43 +104,6 @@ class AdminController {
         })
     }
 
-    static viewGrocery = async (req: Request, res: Response) => {
-        const { option,  itemID } = req.body;
-
-        if(!itemID){
-            res.send("Missing deliverer ID");
-            return;
-        }
-        
-        var dynamicSQL = {
-            
-        };
-
-        if(option == "byId"){
-            dynamicSQL['where'] = { id: itemID };
-        }else if(option == "byStatus_unlisted"){
-            dynamicSQL['where'] = { json: "Listed" };
-        }else if(option == "byStatus_listed"){
-            dynamicSQL['where'] = { status: "Unlisted" };
-        }else if(option == "byPrice"){
-            dynamicSQL['where'] = { status: "Unlisted" };
-        }else{
-            res.send("Missing option");
-            return;
-        }
-        
-        getRepository(Grocery).findAndCount(dynamicSQL).then(rs => {
-            var collection = [];
-            rs[0].forEach(e => {
-                collection.push(e);
-            });
-            res.json({
-                count: rs[1],
-                lists: collection
-            })
-        })
-    }
-
     static updateGrocery = async (req: Request, res: Response) => {
         const { itemID, action, itemName, itemPrice, itemJson } = req.body;
 
@@ -157,7 +119,7 @@ class AdminController {
             }else if(action == "restore") {
                 item.json.status = "Listed"
             }else if(action == "update"){
-                if(!(itemName && itemPrice && itemJson)){
+                if(!(itemName && itemPrice)){
                     res.send("Missing update attributes");
                     return;
                 }
