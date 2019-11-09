@@ -17,7 +17,7 @@ class ServerController {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4) {
-                callback(null, this.response);
+                callback(null, JSON.parse(this.response));
             }
         };
         xmlhttp.open("POST", _endpoint + url, true);
