@@ -36,7 +36,7 @@
                                 <th scope="col">Order</th>
                               </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="gList">
                               <tr>
                                 <th scope="row">1</th>
                                 <td class="w-25">
@@ -76,6 +76,17 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript" src="assets/controller/UtilsController.js"></script>
+    <script type="text/javascript" src="assets/controller/TolongBeliController.js"></script>
+    <script>
+      const groceryList_ = () =>{
+            new TolongBeliController().groceryList("", (result) => {
+                alert(result);
+            })
+        }
+
+        groceryList_();
+    </script>
 </body>
 
 </html>

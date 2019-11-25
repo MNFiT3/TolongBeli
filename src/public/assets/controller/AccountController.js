@@ -48,7 +48,7 @@ class AccountController {
 
         serv.httpPost('/test/post', data, (err, result) => {
             if(err) return;
-            alert(result);
+            alert(JSON.stringify(result));
         });
     }
 }

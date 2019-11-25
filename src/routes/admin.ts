@@ -5,13 +5,14 @@ import AdminController from "../controllers/AdminController";
 
 const router = Router();
 
-router.post("/add/grocery", AdminController.addGrocery)
+router.post("/grocery/add", AdminController.addGrocery);
+router.post("/grocery/update", AdminController.updateGrocery);
 
-router.post("/view/deliverer/", AdminController.viewDeliverer);
+router.post("/deliverer/view/", AdminController.viewDeliverer);
 
-router.post("/validate/deliverer", AdminController.validateDeliverer);
+router.post("/deliverer/validate", AdminController.validateDeliverer);
 
-router.post("/remove/deliverer");
-router.post("/remove/grocery");
+router.post("/deliverer/remove");
+router.post("/grocery/remove");
 
 export default router;

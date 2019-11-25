@@ -6,7 +6,11 @@ class ServerController {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4) {
-                callback(null, JSON.parse(this.response));
+                try{
+                    callback(null, JSON.parse(this.response));
+                }catch{
+                    callback(null, this.response);
+                }
             }
         };
         xmlhttp.open("GET", _endpoint + url, true);
@@ -17,7 +21,11 @@ class ServerController {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4) {
-                callback(null, this.response);
+                try{
+                    callback(null, JSON.parse(this.response));
+                }catch{
+                    callback(null, this.response);
+                }
             }
         };
         xmlhttp.open("POST", _endpoint + url, true);
