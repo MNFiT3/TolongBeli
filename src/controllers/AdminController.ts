@@ -78,7 +78,7 @@ class AdminController {
     }
 
     static addGrocery = async (req: Request, res: Response) => {
-        const { name, category, price, description } = req.body;
+        const { name, category, price, description, image } = req.body;
 
         if (!name && !price) {
             res.send("Missing attributes");
@@ -97,7 +97,7 @@ class AdminController {
                 status: "Listed",
                 category: category || "",
                 description: description || "",
-                image: ""
+                image: image || "https://via.placeholder.com/300"
             }
 
             groceryRepo.save(newGrocery).then(rs => {

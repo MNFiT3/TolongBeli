@@ -42,9 +42,9 @@ class TolongBeliController {
 
         grocery.name = formData.name
         grocery.price = formData.price
-        grocery.category = formData.category || ''
-        grocery.urlImage = formData.urlImage || 'https://via.placeholder.com/300'
-        grocery.desc = formData.desc || ''
+        grocery.category = formData.category
+        grocery.image = (formData.urlImage != "")? formData.urlImage : 'https://via.placeholder.com/300'
+        grocery.desc = formData.desc
 
         serv.httpPost(ADMIN_GROCERY_ENDPOINT + '/add', grocery, (err, result) => {
             if(err) return;
