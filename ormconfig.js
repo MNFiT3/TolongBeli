@@ -19,13 +19,6 @@ if (process.env.NODE_ENV.trim() == 'production') {
    //ormconfig["extra"] = { ssl: true };
 
 }else{
-   // ormconfig["type"] = "mysql";
-   // ormconfig["host"] = "localhost";
-   // ormconfig["port"] = "3306";
-   // ormconfig["username"] = "root";
-   // ormconfig["password"] = "root";
-   // ormconfig["database"] = "tolongbeli";
-
    //Sqlite
    ormconfig["database"] = "database.sqlite";
    ormconfig["type"] = "sqlite";

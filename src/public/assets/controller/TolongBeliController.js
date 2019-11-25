@@ -1,4 +1,5 @@
 const GROCERY_ENDPOINT = '/tolongbeli/grocery';
+const ADMIN_GROCERY_ENDPOINT = '/admin/grocery';
 
 class TolongBeliController {
     
@@ -32,6 +33,22 @@ class TolongBeliController {
             });
 
             document.getElementById("gList").innerHTML = tableData;
+        });
+    }
+
+    addGrocery = (formName, callback) => {
+        var grocery = {};
+        var formData = jsonForm($(formName).serializeArray());
+
+        grocery.name = formData.name
+        grocery.price = formData.price
+        grocery.category = formData.category || ''
+        grocery.urlImage = formData.urlImage || 'https://via.placeholder.com/300'
+        grocery.desc = formData.desc || ''
+
+        serv.httpPost(ADMIN_GROCERY_ENDPOINT + '/add', grocery, (err, result) => {
+            if(err) return;
+            callback(result)
         });
     }
 }

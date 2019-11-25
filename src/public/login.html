@@ -32,7 +32,7 @@
                     </div>
                     <!-- button home and login -->
                     <div class="text-right">
-                        <button class="btn theme-color-0 btn-lg active" type="button" onclick="login()">Login</button>
+                        <button class="btn theme-color-0 btn-lg active" type="button" id="btn-submit">Login</button>
                     </div>
                 </form>
             </div>
@@ -43,11 +43,12 @@
     <script type="text/javascript" src="assets/controller/UtilsController.js"></script>
     <script type="text/javascript" src="assets/controller/AccountController.js"></script>
     <script>
-        const login = () =>{
-            new TolongBeliController().login("form", (result) => {
-                alert(result);
+        
+        document.getElementById('btn-submit').addEventListener('click', () => {
+            new AccountController().login('form', result => {
+                alert(result)
             })
-        }
+        })
     </script>
 </body>
 
