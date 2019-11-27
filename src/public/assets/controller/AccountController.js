@@ -6,27 +6,37 @@ class AccountController {
         var data = {};
         var formData = jsonForm($(formName).serializeArray());
 
-        data.username = formData.uname;
-        data.password = formData.psw;
-        data.phone = formData.num || formData.phone;
-        data.address = formData.address;
-        data.address = formData.address;
-        data.ic = formData.ic;
-        data.address = formData.address;
-        data.plateNumber = formData.plate;
+        //Temp until frontend impliment email form
+        data.email = Math.random().toString();
+
+        data.scope = scope
+        data.username = formData.uname
+        data.password = formData.psw
+        data.phone = formData.num || formData.phone
+        data.address = formData.addr
+        data.ic = formData.ic
+        data.licenseID = formData.license
+        data.plateNumber = formData.plate
+        data.fullName = formData.fname
 
         //Check the basic requirement
         if(!(data.email && data.password && data.username && data.phone)){
-            res.send("Missing improtant attributes")
+            callback("Missing improtant attributes")
+            return
         }
-        //Check requirement for user 
-        if(!(scope == "user" && data.address)){
-            res.send("Missing user attributes")
+
+        if(scope == "deliverer"){
+            if(!(data.plateNumber && data.ic &&  data.fullName && data.licenseID)){
+                callback("Missing deliverer attributes")
+                return
+            }
+        }else{
+            if(!(data.address)){
+                callback("Missing user attributes")
+                return
+            }
         }
-        //Check requirement for deliverer
-        if(!(scope == "deliverer" && data.plateNumber && data.ic)){
-            res.send("Missing user attributes")
-        }
+        
 
         serv.httpPost(ACCOUNT_ENDPOINT + '/register', data, (err, result) => {
             if(err) return;

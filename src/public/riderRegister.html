@@ -11,10 +11,6 @@
 </head>
 
 <body>
-
-    <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-
     <div class="container">
         <div class="card mt-5 shadow p-3 mb-5 bg-white rounded">
             <div class="card-body">
@@ -106,7 +102,7 @@
                             <div class="text-right">
                                 <a href="index.html" class="btn theme-color-0 btn-lg active" role="button"
                                     aria-pressed="true">Back</a>
-                                <button class="btn theme-color-0 btn-lg active" type="submit">Register</button>
+                                <button class="btn theme-color-0 btn-lg active" type="button" id="btn-submit">Register</button>
                             </div>
                         </div>
                     </div>
@@ -114,6 +110,17 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/controller/UtilsController.js"></script>
+    <script type="text/javascript" src="assets/controller/AccountController.js"></script>
+    <script>
+        document.getElementById('btn-submit').addEventListener('click', () => {
+            new AccountController().register('form', 'deliverer', (result) => {
+                alert(result)
+            })
+        })
+    </script>
 </body>
 
 </html>
