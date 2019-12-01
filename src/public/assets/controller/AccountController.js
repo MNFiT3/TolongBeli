@@ -40,6 +40,7 @@ class AccountController {
 
         serv.httpPost(ACCOUNT_ENDPOINT + '/register', data, (err, result) => {
             if(err) return;
+            result = JSON.parse(result.response)
             alert(result);
         });
     }
@@ -58,6 +59,7 @@ class AccountController {
 
         serv.httpPost('/account/login', data, (err, result) => {
             if(err) return;
+            result = JSON.parse(result.response)
             localStorage.setItem('user', JSON.stringify(result.userData))
             callback(result.message)
         });

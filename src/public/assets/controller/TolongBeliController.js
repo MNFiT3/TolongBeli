@@ -11,7 +11,7 @@ class TolongBeliController {
         };
         serv.httpPost(GROCERY_ENDPOINT + '/list', data, (err, result) => {
             if(err) return;
-            
+            result = JSON.parse(result.response)
             var tableData = "";
             result["lists"].forEach((e, i) => {
                 const price = e.price + ''
@@ -58,6 +58,7 @@ class TolongBeliController {
     cartCheckout = (cartObj, callback) => {
         serv.httpPost(CHECKOUT_ENDPOINT, cartObj, (err, result) => {
             if(err) return;
+            result = JSON.parse(result.response)
             callback(result)
         });
     }

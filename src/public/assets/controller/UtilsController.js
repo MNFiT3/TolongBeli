@@ -8,9 +8,9 @@ class ServerController {
             if (this.readyState == 4) {
                 try{
                     setToken(this)
-                    callback(null, JSON.parse(this.response));
+                    callback(null, JSON.parse(this));
                 }catch{
-                    callback(null, this.response);
+                    callback(null, this);
                 }
             }
         };
@@ -25,9 +25,9 @@ class ServerController {
             if (this.readyState == 4) {
                 try{
                     setToken(this)
-                    callback(null, JSON.parse(this.response));
+                    callback(null, JSON.parse(this));
                 }catch{
-                    callback(null, this.response);
+                    callback(null, this);
                 }
             }
         };
