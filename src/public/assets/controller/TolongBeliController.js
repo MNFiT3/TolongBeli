@@ -14,6 +14,8 @@ class TolongBeliController {
             
             var tableData = "";
             result["lists"].forEach((e, i) => {
+                const price = e.price + ''
+                const priceStr = price.substr(0, price.length - 2) + '.' + price.substr(price.length - 2)
                 tableData += `<tr>
                     <th scope="row">`+ (i + 1) +`</th>
                     <td class="w-25">
@@ -21,7 +23,7 @@ class TolongBeliController {
                     </td>
                     <td id='item-`+e.id+`'>` + e.name + `
                     </td>
-                    <td id='price-`+e.id+`'>`+ e.price +`</td>
+                    <td id='price-`+e.id+`'>`+ priceStr +`</td>
                     <td>
                         <input class="form-control input-lg" type="number" min="1" id="qty-` + e.id + `">
                     </td>

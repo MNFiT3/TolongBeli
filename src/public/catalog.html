@@ -61,10 +61,10 @@
         qty: parseInt(document.getElementById('qty-' + item.value).value)
       }
 
-      if (_item.qty == "") {
-
+      if (_item.qty == "" || isNaN(_item.qty)) {
         alert("Item quantity can't be empty")
         item.checked = false
+
       } else {
 
         //add or remove item from cart
