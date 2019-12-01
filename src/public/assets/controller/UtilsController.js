@@ -15,7 +15,7 @@ class ServerController {
             }
         };
         xmlhttp.open("GET", _endpoint + url, true);
-        xmlhttp.setRequestHeader('token', getToken())
+        xmlhttp.setRequestHeader('auth', getToken())
         xmlhttp.send();
     }
 
@@ -33,7 +33,7 @@ class ServerController {
         };
         xmlhttp.open("POST", _endpoint + url, true);
         xmlhttp.setRequestHeader("Content-Type", "application/json");
-        xmlhttp.setRequestHeader('token', getToken())
+        xmlhttp.setRequestHeader('auth', getToken())
         xmlhttp.send(JSON.stringify(json));
     }
 }

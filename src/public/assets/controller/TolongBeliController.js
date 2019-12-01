@@ -1,4 +1,5 @@
 const GROCERY_ENDPOINT = '/tolongbeli/grocery';
+const CHECKOUT_ENDPOINT = '/tolongbeli/checkout';
 const ADMIN_GROCERY_ENDPOINT = '/admin/grocery';
 
 class TolongBeliController {
@@ -47,6 +48,13 @@ class TolongBeliController {
         grocery.desc = formData.desc
 
         serv.httpPost(ADMIN_GROCERY_ENDPOINT + '/add', grocery, (err, result) => {
+            if(err) return;
+            callback(result)
+        });
+    }
+
+    cartCheckout = (cartObj, callback) => {
+        serv.httpPost(CHECKOUT_ENDPOINT, cartObj, (err, result) => {
             if(err) return;
             callback(result)
         });

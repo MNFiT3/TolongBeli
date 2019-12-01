@@ -7,5 +7,6 @@ import TolongBeliController from "../controllers/TolongBeliController";
 const router = Router();
 
 router.post('/grocery/list/', TolongBeliController.groceryList);
+router.post('/checkout', [checkJwt],TolongBeliController.checkout)
 
 export default router;
