@@ -13,9 +13,11 @@
 
   <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-
   <div class="container">
     <div class="card mt-5 shadow p-3 mb-5 bg-white rounded">
+      <a class="btn-checkout">
+        <button type="button" class="btn btn-danger" onclick="checkout()">Checkout</button>
+      </a>
       <div class="card-body">
         <div class="logocontainer" align="center">
           <img src="tolongBeli1.png" alt="logo" class="logo" width="15%">
@@ -49,31 +51,41 @@
   <script type="text/javascript" src="assets/controller/TolongBeliController.js"></script>
   <script>
     var cart = {}
-    new TolongBeliController().groceryList("gList", (result) => {})
+    new TolongBeliController().groceryList("gList", (result) => { })
 
     const add = (item) => {
       const itemId = item.value
       let _item = {
-        name: document.getElementById('item-'+item.value).innerHTML.trim(),
-        price: parseFloat(document.getElementById('price-'+item.value).innerHTML.trim()),
-        qty: parseInt(document.getElementById('qty-'+item.value).value)
+        name: document.getElementById('item-' + item.value).innerHTML.trim(),
+        price: parseFloat(document.getElementById('price-' + item.value).innerHTML.trim()),
+        qty: parseInt(document.getElementById('qty-' + item.value).value)
       }
-      
-      if(_item.qty == ""){
+
+      if (_item.qty == "") {
 
         alert("Item quantity can't be empty")
         item.checked = false
-      }else{
-        
+      } else {
+
         //add or remove item from cart
-        if(cart[itemId] != undefined){
+        if (cart[itemId] != undefined) {
           delete cart[itemId]
-        }else{
+        } else {
           cart[itemId] = _item
         }
       }
+    }
 
-      console.log(cart)
+    const checkout = () => {
+      //TODO: Add empty check for cart
+
+      if (confirm("Checkout now?")) {
+        let temp = {
+          createdOn: new Date(),
+          data: cart
+        }
+        localStorage.setItem('groceryItems', JSON.stringify(temp))
+      }
     }
   </script>
 </body>
