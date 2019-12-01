@@ -7,6 +7,7 @@ class ServerController {
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4) {
                 try{
+                    setToken(this)
                     callback(null, JSON.parse(this.response));
                 }catch{
                     callback(null, this.response);
@@ -14,6 +15,7 @@ class ServerController {
             }
         };
         xmlhttp.open("GET", _endpoint + url, true);
+        xmlhttp.setRequestHeader('token', getToken())
         xmlhttp.send();
     }
 
@@ -22,6 +24,7 @@ class ServerController {
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4) {
                 try{
+                    setToken(this)
                     callback(null, JSON.parse(this.response));
                 }catch{
                     callback(null, this.response);
@@ -30,8 +33,24 @@ class ServerController {
         };
         xmlhttp.open("POST", _endpoint + url, true);
         xmlhttp.setRequestHeader("Content-Type", "application/json");
+        xmlhttp.setRequestHeader('token', getToken())
         xmlhttp.send(JSON.stringify(json));
     }
+}
+
+const setToken = (response) => {
+    let token = response.getResponseHeader('token')
+    if(token != null || token != undefined){
+        localStorage.setItem('token', token)
+    }
+}
+
+const getToken = () => {
+    let token = localStorage.getItem('token')
+    if (token != null || token != undefined || token == ''){
+        return token
+    }
+    return null
 }
 
 const jsonForm = (formData) => {

@@ -16,7 +16,7 @@ class TolongBeliController {
                 tableData += `<tr>
                     <th scope="row">`+ (i + 1) +`</th>
                     <td class="w-25">
-                        <img src="` + e.json.image + `" class="img-fluid img-thumbnail" alt="Sheep">
+                        <img src="` + e.json.image + `" class="img-fluid img-thumbnail" alt="image">
                     </td>
                     <td>` + e.name + `
                     </td>

@@ -5,6 +5,7 @@ import { getRepository } from "typeorm";
 import { Account } from "../entity/Account";
 import { User } from "../entity/User";
 import { Deliverer } from "../entity/Deliverer";
+import config from "../config/config";
 
 const SALT_ROUNDS = 10;
 
@@ -92,7 +93,7 @@ class AccountController {
                     return;
                 }
             }).catch(err => {
-                if(err.message.includes("UNIQUE constraint failed")){
+                if (err.message.includes("UNIQUE constraint failed")) {
                     res.send("Email is already being used");
                     return;
                 }
@@ -103,22 +104,35 @@ class AccountController {
     static login = async (req: Request, res: Response) => {
         const { email, password } = req.body;
 
-        if(!(email && password)){
+        if (!(email && password)) {
             res.send("Missing attributes");
             return;
         }
 
-        getRepository(Account).findOneOrFail({email: email}, {relations: ['deliverer']}).then(rs => {
+        getRepository(Account).findOneOrFail({ email: email }, { relations: ['deliverer'] }).then(rs => {
+            var uid = rs.id
+            var email = rs.email
+
+            const newToken = jwt.sign({ uid, email }, config.jwtSecret, {
+                expiresIn: "1h"
+            });
+            res.setHeader("token", newToken);
+
             bcrypt.compare(password, rs.password, (err, result) => {
-                if(err){
+                if (err) {
                     res.send(err);
                     return;
                 }
-                
-                if(!result){
+
+                if (!result) {
                     res.send("Wrong password");
                     return;
                 }
+
+                const newToken = jwt.sign({ uid, email }, config.jwtSecret, {
+                    expiresIn: "1h"
+                });
+                res.setHeader("token", newToken);
 
                 res.json({
                     message: "Login success",
@@ -126,7 +140,7 @@ class AccountController {
                         email: rs.email,
                         username: rs.username,
                         scope: rs.scope,
-                        isApproved: (rs.scope == 'deliverer')? rs.deliverer.isApproved : null
+                        isApproved: (rs.scope == 'deliverer') ? rs.deliverer.isApproved : null
                     }
                 })
             })
