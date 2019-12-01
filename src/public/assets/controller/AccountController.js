@@ -41,7 +41,6 @@ class AccountController {
         serv.httpPost(ACCOUNT_ENDPOINT + '/register', data, (err, result) => {
             if(err) return;
             alert(result);
-            console.log(result)
         });
     }
 
@@ -59,7 +58,8 @@ class AccountController {
 
         serv.httpPost('/account/login', data, (err, result) => {
             if(err) return;
-            alert(JSON.stringify(result));
+            localStorage.setItem('user', JSON.stringify(result.userData))
+            callback(result.message)
         });
     }
 }
