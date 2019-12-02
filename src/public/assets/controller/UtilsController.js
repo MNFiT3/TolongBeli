@@ -12,6 +12,10 @@ class ServerController {
                 }catch{
                     callback(null, this);
                 }
+            }else{
+                if(this.status == 401){
+                    window.location.href = 'error.html?c=401'
+                }
             }
         };
         xmlhttp.open("GET", _endpoint + url, true);
@@ -28,6 +32,10 @@ class ServerController {
                     callback(null, JSON.parse(this));
                 }catch{
                     callback(null, this);
+                }
+            }else{
+                if(this.status == 401){
+                    window.location.href = 'error.html?c=401'
                 }
             }
         };

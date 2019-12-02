@@ -1,5 +1,6 @@
 const GROCERY_ENDPOINT = '/tolongbeli/grocery';
 const CHECKOUT_ENDPOINT = '/tolongbeli/checkout';
+const MYORDER_ENDPOINT = '/tolongbeli/order';
 const ADMIN_GROCERY_ENDPOINT = '/admin/grocery';
 
 class TolongBeliController {
@@ -60,6 +61,33 @@ class TolongBeliController {
             if(err) return;
             result = JSON.parse(result.response)
             callback(result)
+        });
+    }
+
+    myOrders = (htmlElement, callback) => {
+        var data = {
+            option: "all",
+            value: ""
+        };
+        serv.httpPost(MYORDER_ENDPOINT, data, (err, result) => {
+            if(err) return;
+            result = JSON.parse(result.response)
+            var tableData = "";
+            result.forEach((e, i) => {
+                const price = e.totalPrice + ''
+                const priceStr = price.substr(0, price.length - 2) + '.' + price.substr(price.length - 2)
+                tableData += `<tr>
+                    <th scope="row">`+ (i + 1) +`</th>
+                    <td class="w-25">
+                        `+ e.createdOn +`
+                    </td>
+                    <td>RM ` + priceStr + `
+                    </td>
+                    <td><button type='button' class='btn btn-primary' onClick="window.location.href='orderDetail.html?id=`+ e.id +`'">View</button></td>
+                </tr>`
+            });
+
+            document.getElementById(htmlElement).innerHTML = tableData;
         });
     }
 }

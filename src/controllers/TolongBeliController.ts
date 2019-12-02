@@ -65,13 +65,17 @@ class TolongBeliController {
         const jwt = res.locals.jwtPayload
 
         var groceryList = await getRepository(Grocery).find({ where: itemsId })
-        var user = await getRepository(User).findOneOrFail({account: {id: jwt.uid}})
+        var user = await getRepository(User).findOneOrFail({ account: { id: jwt.uid } })
+
+        const dt = new Date()
+        const dateTimeUTC = dt.getUTCFullYear + '-' + dt.getUTCMonth + '-' + dt.getUTCDay + ' ' + dt.getUTCHours + ':' + dt.getUTCMinutes + ':' + dt.getUTCSeconds
 
         var newOrder = new Order()
         newOrder.totalPrice = totalPrice
         newOrder.user = user
         newOrder.hasPaid_user = false
         newOrder.hasPaid_deliverer = false
+        newOrder.createdOn = dateTimeUTC
 
         var order = await getRepository(Order).save(newOrder)
 
@@ -93,7 +97,57 @@ class TolongBeliController {
             res.send("error")
             return
         })
+    }
+
+    static myOrder = async (req: Request, res: Response) => {
+        const {
+            accountId,
+            option,
+            value
+        } = req.body
+
+        //Get jwtpayload
+        const jwt = res.locals.jwtPayload
+
+        var account = await getRepository(Account).findOneOrFail({
+            relations: ['user'],
+            where: {
+                id: accountId || jwt.uid
+            }
+        })
+        var data
+
+        if(option == 'all'){
+            data = await getRepository(Order).find({ 
+                where: {
+                    user: { 
+                        id: account.user.id
+                    },
+                }
+            })
+        }else if(option == 'byId'){
+
+            if(!value){
+                res.send('Missing value')
+                return
+            }
+
+            data = await getRepository(Order).findOneOrFail({ 
+                relations: ['itemList', 'itemList.grocery'],
+                where: {
+                    user: { 
+                        id: account.user.id
+                    },
+                    id: value
+                }
+            })
+        }else{
+            res.send('Invalid argrument')
+            return
+        }
         
+
+        res.json(data)
     }
 };
 

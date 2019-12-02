@@ -18,6 +18,11 @@ export class Order {
     hasPaid_deliverer: boolean;
 
     @Column({
+        type: "datetime"
+    })
+    createdOn: string;
+
+    @Column({
         type: 'simple-json',
         nullable: true
     })
