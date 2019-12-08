@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn, OneToMany, CreateDateColumn } from 'typeorm';
 import { User } from './User';
 import { Deliverer } from './Deliverer';
 import { ItemList } from './ItemList';
@@ -12,14 +12,12 @@ export class Order {
     totalPrice: number;
 
     @Column()
-    hasPaid_user: boolean;
-
-    @Column()
-    hasPaid_deliverer: boolean;
+    hasPaid: boolean;
 
     @Column({
         type: "datetime"
     })
+    @CreateDateColumn()
     createdOn: string;
 
     @Column({

@@ -9,5 +9,8 @@ const router = Router();
 router.post('/grocery/list/', TolongBeliController.groceryList)
 router.post('/checkout', [checkJwt], TolongBeliController.checkout)
 router.post('/order', [checkJwt], TolongBeliController.myOrder)
+router.post('/deliverer/job/available', [checkJwt], TolongBeliController.delivererOpenJob)
+router.post('/deliverer/job/apply', [checkJwt], TolongBeliController.delivererAcceptJob)
+router.post('/user/pay', [checkJwt], TolongBeliController.userPay)
 
 export default router;
