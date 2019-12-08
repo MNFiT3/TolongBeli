@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title id='errTitle'></title>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <br/>
+        <br/>
+        <br/>
+        <h1>しまった (Oops) Error Code <span id='errCode'></span></h1>
+        <a href="login.html">Login</a>
+    </div>
+
+    <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/controller/UtilsController.js"></script>
+    <script type="text/javascript" src="assets/controller/TolongBeliController.js"></script>
+    <script>
+            var url = window.location.href
+            var urlParams = new URL(url)
+            var p = urlParams.searchParams.get("c")
+            document.getElementById('errCode').innerHTML = p
+            document.getElementById('errTitle').innerHTML = 'Error ' + p
+        </script>
+</body>
+
+</html>

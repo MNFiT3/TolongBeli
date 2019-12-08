@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Account } from './Account';
 import { Order } from './Order';
 
@@ -22,6 +22,6 @@ export class User {
     @JoinColumn()
     account: Account;
 
-    @OneToOne(type => Order, order => order.user)
-    order: Order;
+    @OneToMany(type => Order, order => order.user)
+    order: Order[];
 }
