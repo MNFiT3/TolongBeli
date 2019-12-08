@@ -5,6 +5,7 @@ import { Order } from "../entity/Order";
 import { User } from "../entity/User";
 import { ItemList } from "../entity/ItemList";
 import { Account } from "../entity/Account";
+import { Deliverer } from "../entity/Deliverer";
 
 class TolongBeliController {
 
@@ -73,8 +74,7 @@ class TolongBeliController {
         var newOrder = new Order()
         newOrder.totalPrice = totalPrice
         newOrder.user = user
-        newOrder.hasPaid_user = false
-        newOrder.hasPaid_deliverer = false
+        newOrder.hasPaid = false
         newOrder.createdOn = dateTimeUTC
 
         var order = await getRepository(Order).save(newOrder)
@@ -117,37 +117,113 @@ class TolongBeliController {
         })
         var data
 
-        if(option == 'all'){
-            data = await getRepository(Order).find({ 
+        if (option == 'all') {
+            data = await getRepository(Order).find({
                 where: {
-                    user: { 
+                    user: {
                         id: account.user.id
                     },
                 }
             })
-        }else if(option == 'byId'){
+        } else if (option == 'byId') {
 
-            if(!value){
+            if (!value) {
                 res.send('Missing value')
                 return
             }
 
-            data = await getRepository(Order).findOneOrFail({ 
+            data = await getRepository(Order).findOneOrFail({
                 relations: ['itemList', 'itemList.grocery'],
                 where: {
-                    user: { 
+                    user: {
                         id: account.user.id
                     },
                     id: value
                 }
             })
-        }else{
+        } else {
             res.send('Invalid argrument')
             return
         }
-        
 
         res.json(data)
+    }
+
+    static delivererOpenJob = async (req: Request, res: Response) => {
+        const availJobs = await getRepository(Order).findAndCount({ where: { hasPaid: false, deliverer: null }, relations: ['user'] })
+
+        availJobs[0].forEach(e => {
+            delete e['user']['json']
+        })
+
+        res.json(availJobs)
+    }
+
+    static delivererAcceptJob = async (req: Request, res: Response) => {
+        const { orderId
+        } = req.body
+        const jwt = res.locals.jwtPayload
+
+        if (!orderId) {
+            res.send("OrderId attribute missing")
+            return
+        }
+
+        var applyJob: Order
+        try {
+            applyJob = await getRepository(Order).findOneOrFail({ where: { id: orderId } })
+        } catch (error) {
+            res.send('Error occured applying the job')
+            return
+        }
+
+        var deliverer: Deliverer
+        try {
+            deliverer = await getRepository(Deliverer).findOneOrFail({ where: { account: jwt.uid } })
+        } catch (error) {
+            res.send('Error getting deliver data')
+            return
+        }
+
+        applyJob.deliverer = deliverer
+
+        try {
+            await getRepository(Order).save(applyJob)
+        } catch (error) {
+            res.send('Error applying job')
+            return
+        }
+
+        res.send('SUCCESS')
+    }
+
+    static userPay = async (req: Request, res: Response) => {
+        const { orderId } = req.body
+        const jwt = res.locals.jwtPayload
+
+        if (!orderId) {
+            res.send("OrderId attribute missing")
+            return
+        }
+
+        var order: Order
+        try {
+            order = await getRepository(Order).findOneOrFail({ where: { id: orderId}})
+        } catch (error) {
+            res.send('Error finding order')
+            return
+        }
+
+        order.hasPaid = true
+
+        try {
+            await getRepository(Order).save(order)
+        } catch (error) {
+            res.send('Error updating the order')
+            return
+        }
+
+        res.send('SUCCESS')
     }
 };
 

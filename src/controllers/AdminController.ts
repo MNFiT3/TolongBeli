@@ -59,8 +59,16 @@ class AdminController {
 
             if (status == 'approve') {
                 updateDeliverer.isApproved = true;
+                updateDeliverer.json.status = {
+                    message: "Approved",
+                    code: 0
+                }
             } else if (status == 'reject') {
                 updateDeliverer.isApproved = false;
+                updateDeliverer.json.status = {
+                    message: "Rejected",
+                    code: 0
+                }
             } else {
                 res.send("Status is out of scope");
                 return;
