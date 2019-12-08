@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin</title>
+
+    <link rel="icon" href="tolongBeli2.png">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="text-center card mt-5 shadow p-3 mb-5 bg-white rounded">
+            <a href="dashboardAdmin.html" class="btn theme-color-0 btn-lg active" role="button" aria-pressed="true">Back
+            </a><br />
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table" id="table-image">
+                            <thead>
+                                <tr>
+                                    <h1>Rider List</h1>
+                                </tr>
+                                <tr>
+                                    <th scope="col">Picture</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">License ID</th>
+                                    <th scope="col">Vehicle Plate</th>
+                                </tr>
+                            </thead>
+                            <tbody id="gList"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/controller/UtilsController.js"></script>
+    <script type="text/javascript" src="assets/controller/TolongBeliController.js"></script>
+</body>
+
+</html>
