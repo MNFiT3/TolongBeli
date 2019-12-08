@@ -214,7 +214,19 @@ class TolongBeliController {
             return
         }
 
+        if(order.hasPaid){
+            res.send('Order already paid')
+            return
+        }
+
         order.hasPaid = true
+
+        if(order.json == null){
+            order.json = {}
+        }
+
+        order.json['paidAt'] = new Date()
+        order.json['paidBy'] = jwt.uid
 
         try {
             await getRepository(Order).save(order)
