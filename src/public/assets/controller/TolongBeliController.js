@@ -4,6 +4,8 @@ const MYORDER_ENDPOINT = '/tolongbeli/order';
 const ADMIN_GROCERY_ENDPOINT = '/admin/grocery';
 const ADMIN_LIST_NEW_DELIVERER = '/admin/deliverer/view';
 const ADMIN_APPROVE_NEW_DELIVERER = '/admin/deliverer/validate';
+const DELIVERER_JOB_LIST = '/tolongbeli/deliverer/job/available';
+const DELIVERER_APPLY_JOB = 'tolongbeli/deliverer/job/apply';
 
 class TolongBeliController {
     
@@ -140,6 +142,36 @@ class TolongBeliController {
                 return
             }
 
+            alert('Success')
+            location.reload()
+        });
+    }
+
+    delivererAvailJob = (htmlElement) => {
+        serv.httpPost(DELIVERER_JOB_LIST, {
+        }, (err, result) => {
+            if(err){
+                alert(err)
+                return
+            }
+            result = JSON.parse(result.response)
+
+            result.forEach(e => {
+                console.log(e)
+                //<td><button type='button' class='btn btn-primary' onClick="new TolongBeliController().delivererApplyJob('` + e.id + `')">Apply</button></td>
+                //e.id refer to orderId
+            })
+        });
+    }
+
+    delivererApplyJob = (orderId) => {
+        serv.httpPost(DELIVERER_APPLY_JOB, {
+            "orderId" : orderId
+        }, (err, result) => {
+            if(err){
+                alert(err)
+                return
+            }
             alert('Success')
             location.reload()
         });
