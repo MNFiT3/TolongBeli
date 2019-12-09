@@ -43,11 +43,9 @@
     <script type="text/javascript" src="assets/controller/UtilsController.js"></script>
     <script type="text/javascript" src="assets/controller/AccountController.js"></script>
     <script>
-        
+
         document.getElementById('btn-submit').addEventListener('click', () => {
-            new AccountController().login('form', result => {
-                window.location.href = 'user_catalog.html'
-            })
+            new AccountController().login('form')
         })
     </script>
 </body>

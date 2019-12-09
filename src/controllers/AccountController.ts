@@ -105,7 +105,9 @@ class AccountController {
         const { email, password } = req.body;
 
         if (!(email && password)) {
-            res.send("Missing attributes");
+            res.json({
+                message: "Missing attributes"
+            })
             return;
         }
 
@@ -120,12 +122,16 @@ class AccountController {
 
             bcrypt.compare(password, rs.password, (err, result) => {
                 if (err) {
-                    res.send(err);
+                    res.json({
+                        message: err
+                    });
                     return;
                 }
 
                 if (!result) {
-                    res.send("Wrong password");
+                    res.json({
+                        message: "Wrong password"
+                    });
                     return;
                 }
 
@@ -145,7 +151,9 @@ class AccountController {
                 })
             })
         }).catch(err => {
-            res.send("User with the email is not exists");
+            res.json({
+                message: "User with the email is not exists"
+            });
             return;
         })
     }

@@ -20,48 +20,59 @@ class AccountController {
         data.fullName = formData.fname
 
         //Check the basic requirement
-        if(!(data.email && data.password && data.username && data.phone)){
+        if (!(data.email && data.password && data.username && data.phone)) {
             callback("Missing improtant attributes")
             return
         }
 
-        if(scope == "deliverer"){
-            if(!(data.plateNumber && data.ic &&  data.fullName && data.licenseID)){
+        if (scope == "deliverer") {
+            if (!(data.plateNumber && data.ic && data.fullName && data.licenseID)) {
                 callback("Missing deliverer attributes")
                 return
             }
-        }else{
-            if(!(data.address)){
+        } else {
+            if (!(data.address)) {
                 callback("Missing user attributes")
                 return
             }
         }
-        
+
 
         serv.httpPost(ACCOUNT_ENDPOINT + '/register', data, (err, result) => {
-            if(err) return;
+            if (err) return;
             result = JSON.parse(result.response)
             alert(result);
         });
     }
 
-    login(formName, callback) { 
+    login(formName) {
         var data = {};
         var formData = jsonForm($(formName).serializeArray());
 
         data.email = formData.uname;
         data.password = formData.psw;
 
-        if(!(data.email && data.password)){
+        if (!(data.email && data.password)) {
             alert("Missing improtant attributes");
             return;
         }
 
         serv.httpPost('/account/login', data, (err, result) => {
-            if(err) return;
+            if (err) return;
             result = JSON.parse(result.response)
+
+            if (!result.userData) {
+                alert(result.message)
+            } else {
+                switch (result.userData.scope) {
+                    case 'user': window.location.href = 'user_catalog.html'; break;
+                    case 'admin': window.location.href = 'admin_index.html'; break;
+                    case 'deliverer': window.location.href = 'rider_index.html'; break;
+                    default: window.location.href = 'error.html?c=404'; break;
+                }
+            }
+
             localStorage.setItem('user', JSON.stringify(result.userData))
-            callback(result.message)
         });
     }
 }
