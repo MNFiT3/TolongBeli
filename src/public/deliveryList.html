@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Rider</title>
+
+    <link rel="icon" href="tolongBeli2.png">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="text-center card mt-5 shadow p-3 mb-5 bg-white rounded">
+
+            <a href="dashboardRider.html" class="btn theme-color-0 btn-lg active" role="button" aria-pressed="true">Back
+            </a><br />
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table" id="table-image">
+                            <thead>
+                                <tr>
+                                    <h1>Ongoing Delivery</h1>
+                                </tr>
+                                <tr>
+                                    <th scope="col">No.</th>
+                                    <th scope="col">Items</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Price (RM)</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Milk, Eggs, Doodoo</td>
+                                    <td>3, 4, 5</td>
+                                    <td>100</td>
+                                    <td>Ken Rimba</td>
+                                    <td>
+                                        <button type="button" class="btn theme-color-0 btn-sm active"
+                                            onclick="">Finish</button>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody id="gList"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="text-center card mt-5 shadow p-3 mb-5 bg-white rounded">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table" id="table-image">
+                            <thead>
+                                <tr>
+                                    <h1>Pending Delivery</h1>
+                                </tr>
+                                <tr>
+                                    <th scope="col">No.</th>
+                                    <th scope="col">Items</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Price (RM)</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Milk, Eggs, Doodoo</td>
+                                    <td>3, 4, 5</td>
+                                    <td>100</td>
+                                    <td>Ken Rimba</td>
+                                    <td>
+                                        <button type="button" class="btn theme-color-0 btn-sm active"
+                                            onclick="">Accept</button>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody id="gList"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/controller/UtilsController.js"></script>
+    <script type="text/javascript" src="assets/controller/TolongBeliController.js"></script>
+</body>
+
+</html>

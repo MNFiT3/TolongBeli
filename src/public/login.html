@@ -28,7 +28,7 @@
                     <div class="form-group">
                         <b>Password</b>
                         <input class="form-control" type="password" placeholder="Enter password" name="psw" required>
-                        <p class="txt-sz">First timer? Register <a href="index.html">here</a>!</p><br />
+                        <p class="txt-sz">First time? Register <a href="index.html">here</a>!</p><br />
                     </div>
                     <!-- button home and login -->
                     <div class="text-right">
@@ -46,7 +46,6 @@
         
         document.getElementById('btn-submit').addEventListener('click', () => {
             new AccountController().login('form', result => {
-                alert(result)
                 window.location.href = 'catalog.html'
             })
         })
