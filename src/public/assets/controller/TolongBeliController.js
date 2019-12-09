@@ -59,7 +59,7 @@ class TolongBeliController {
     cartCheckout = (cartObj, callback) => {
         serv.httpPost(CHECKOUT_ENDPOINT, cartObj, (err, result) => {
             if(err) return;
-            result = JSON.parse(result.response)
+            result = result.response
             callback(result)
         });
     }
