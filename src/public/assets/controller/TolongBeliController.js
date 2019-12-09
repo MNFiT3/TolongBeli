@@ -2,6 +2,7 @@ const GROCERY_ENDPOINT = '/tolongbeli/grocery';
 const CHECKOUT_ENDPOINT = '/tolongbeli/checkout';
 const MYORDER_ENDPOINT = '/tolongbeli/order';
 const ADMIN_GROCERY_ENDPOINT = '/admin/grocery';
+const ADMIN_LIST_NEW_DELIVERER = '/admin/deliverer/view';
 
 class TolongBeliController {
     
@@ -90,6 +91,7 @@ class TolongBeliController {
         });
     }
 
+    //TODO: -
     myOrderDetails = (htmlElement, orderId) => {
         serv.httpPost(MYORDER_ENDPOINT, {
             "option": "byId",
@@ -99,6 +101,28 @@ class TolongBeliController {
             result = result.response
 
             document.getElementById(htmlElement).innerHTML = result;
+        });
+    }
+
+    newDeliverer = (htmlElement) => {
+        serv.httpPost(ADMIN_LIST_NEW_DELIVERER, {
+            "option":"byApproval_false",
+            "delivererID": ""
+        }, (err, result) => {
+            if(err) return;
+            result = JSON.parse(result.response)
+
+            console.log(result)
+            var tableData = "";
+            result.lists.forEach((e, i) => {
+                tableData += `<tr>
+                    <td class="w-25"> `+ e.account.username +`</td>
+                    <td>` + 1 + `</td>
+                    <td><button type='button' class='btn btn-primary' onClick="window.location.href='user_orderDetail.html?id=`+ e.id +`'">View</button></td>
+                </tr>`
+            });
+
+            document.getElementById(htmlElement).innerHTML = tableData;
         });
     }
 }
