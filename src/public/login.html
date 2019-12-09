@@ -46,7 +46,6 @@
         
         document.getElementById('btn-submit').addEventListener('click', () => {
             new AccountController().login('form', result => {
-                alert(result)
                 window.location.href = 'catalog.html'
             })
         })

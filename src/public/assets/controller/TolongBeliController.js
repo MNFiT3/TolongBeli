@@ -18,7 +18,6 @@ class TolongBeliController {
                 const price = e.price + ''
                 const priceStr = price.substr(0, price.length - 2) + '.' + price.substr(price.length - 2)
                 tableData += `<tr>
-                    <th scope="row">`+ (i + 1) +`</th>
                     <td class="w-25">
                         <img src="` + e.json.image + `" class="img-fluid img-thumbnail" alt="image">
                     </td>
