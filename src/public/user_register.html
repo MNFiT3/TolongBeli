@@ -88,6 +88,7 @@
         document.getElementById('btn-submit').addEventListener('click', () => {
             new AccountController().register('form', 'user', (result) => {
                 alert(result)
+                window.location.href = 'login.html'
             })
         })
     </script>
