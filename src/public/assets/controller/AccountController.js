@@ -7,7 +7,7 @@ class AccountController {
         var formData = jsonForm($(formName).serializeArray());
 
         //Temp until frontend impliment email form
-        data.email = Math.random().toString();
+        data.email = formData.email || Math.random().toString();
 
         data.scope = scope
         data.username = formData.uname
@@ -40,6 +40,7 @@ class AccountController {
 
         serv.httpPost(ACCOUNT_ENDPOINT + '/register', data, (err, result) => {
             if(err) return;
+            result = JSON.parse(result.response)
             alert(result);
         });
     }
@@ -48,17 +49,19 @@ class AccountController {
         var data = {};
         var formData = jsonForm($(formName).serializeArray());
 
-        data.username = formData.uname;
+        data.email = formData.uname;
         data.password = formData.psw;
 
-        if(!(data.username && data.password)){
+        if(!(data.email && data.password)){
             alert("Missing improtant attributes");
             return;
         }
 
-        serv.httpPost('/test/post', data, (err, result) => {
+        serv.httpPost('/account/login', data, (err, result) => {
             if(err) return;
-            alert(JSON.stringify(result));
+            result = JSON.parse(result.response)
+            localStorage.setItem('user', JSON.stringify(result.userData))
+            callback(result.message)
         });
     }
 }
