@@ -117,8 +117,11 @@ class TolongBeliController {
             result.lists.forEach((e, i) => {
                 tableData += `<tr>
                     <td class="w-25"> `+ e.account.username +`</td>
-                    <td>` + 1 + `</td>
-                    <td><button type='button' class='btn btn-primary' onClick="window.location.href='user_orderDetail.html?id=`+ e.id +`'">View</button></td>
+                    <td>` + e.account.email + `</td>
+                    <td>` + e.json.documents.ic + `</td>
+                    <td>` + e.vehicle.plateNumber + `</td>
+                    <td>` + e.json.status.message + `</td>
+                    <td><button type='button' class='btn btn-primary' onClick="newDelivererApprove(` + e.id + `)">View</button></td>
                 </tr>`
             });
 
