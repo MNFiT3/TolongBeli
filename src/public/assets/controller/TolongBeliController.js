@@ -63,7 +63,7 @@ class TolongBeliController {
         });
     }
 
-    myOrders = (htmlElement, callback) => {
+    myOrders = (htmlElement) => {
         var data = {
             option: "all",
             value: ""
@@ -82,11 +82,23 @@ class TolongBeliController {
                     </td>
                     <td>RM ` + priceStr + `
                     </td>
-                    <td><button type='button' class='btn btn-primary' onClick="window.location.href='orderDetail.html?id=`+ e.id +`'">View</button></td>
+                    <td><button type='button' class='btn btn-primary' onClick="window.location.href='user_orderDetail.html?id=`+ e.id +`'">View</button></td>
                 </tr>`
             });
 
             document.getElementById(htmlElement).innerHTML = tableData;
+        });
+    }
+
+    myOrderDetails = (htmlElement, orderId) => {
+        serv.httpPost(MYORDER_ENDPOINT, {
+            "option": "byId",
+            "value": orderId
+        }, (err, result) => {
+            if(err) return;
+            result = result.response
+
+            document.getElementById(htmlElement).innerHTML = result;
         });
     }
 }

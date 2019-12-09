@@ -66,13 +66,13 @@ class AccountController {
             } else {
                 switch (result.userData.scope) {
                     case 'user': window.location.href = 'user_catalog.html'; break;
-                    case 'admin': window.location.href = 'rider_index.html'; break;
-                    case 'deliverer': window.location.href = 'admin_index.html'; break;
+                    case 'admin': window.location.href = 'admin_index.html'; break;
+                    case 'deliverer': window.location.href = 'rider_index.html'; break;
                     default: window.location.href = 'error.html?c=404'; break;
                 }
             }
 
-            localStorage.setItem('user', result.userData)
+            localStorage.setItem('user', JSON.stringify(result.userData))
         });
     }
 }

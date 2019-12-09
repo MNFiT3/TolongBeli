@@ -93,7 +93,7 @@
         localStorage.setItem('groceryItems', JSON.stringify(temp))
 
         new TolongBeliController().cartCheckout(temp, result => {
-          window.location.href = 'myorder.html'
+          window.location.href = 'user_myorder.html'
         })
       }
     }

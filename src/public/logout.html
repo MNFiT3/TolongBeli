@@ -19,20 +19,23 @@
     <script type="text/javascript" src="assets/controller/UtilsController.js"></script>
     <script type="text/javascript" src="assets/controller/TolongBeliController.js"></script>
     <script>
-        let element = document.getElementById('timer')
-        let time = 3
-        element.innerHTML = time
-        
-        var interval = setInterval(() => {
-            time--
-            element.innerHTML = time
-            
-            if(time <= 0){
-                clearInterval(interval)
-                localStorage.removeItem('token')
-                window.location.href = 'login.html'
-            }
-        }, 1000)
+        // let element = document.getElementById('timer')
+        // let time = 3
+        // element.innerHTML = time
+
+        // var interval = setInterval(() => {
+        //     time--
+        //     element.innerHTML = time
+
+        //     if(time <= 0){
+        //         clearInterval(interval)
+        //         localStorage.removeItem('token')
+        //         window.location.href = 'login.html'
+        //     }
+        // }, 1000)
+
+        localStorage.removeItem('token')
+        window.location.href = 'login.html'
 
     </script>
 </body>

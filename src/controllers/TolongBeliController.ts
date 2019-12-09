@@ -101,7 +101,6 @@ class TolongBeliController {
 
     static myOrder = async (req: Request, res: Response) => {
         const {
-            accountId,
             option,
             value
         } = req.body
@@ -112,19 +111,23 @@ class TolongBeliController {
         var account = await getRepository(Account).findOneOrFail({
             relations: ['user'],
             where: {
-                id: accountId || jwt.uid
+                id: jwt.uid
             }
         })
         var data
 
         if (option == 'all') {
-            data = await getRepository(Order).find({
-                where: {
-                    user: {
-                        id: account.user.id
-                    },
-                }
-            })
+            try {
+                data = await getRepository(Order).find({
+                    where: {
+                        user: {
+                            id: account.user.id
+                        },
+                    }
+                })
+            } catch (error) {
+                res.send("Cant find orders")
+            }
         } else if (option == 'byId') {
 
             if (!value) {
@@ -132,15 +135,19 @@ class TolongBeliController {
                 return
             }
 
-            data = await getRepository(Order).findOneOrFail({
-                relations: ['itemList', 'itemList.grocery'],
-                where: {
-                    user: {
-                        id: account.user.id
-                    },
-                    id: value
-                }
-            })
+            try {
+                data = await getRepository(Order).findOneOrFail({
+                    relations: ['itemList', 'itemList.grocery'],
+                    where: {
+                        user: {
+                            id: account.user.id
+                        },
+                        id: value
+                    }
+                })
+            } catch (error) {
+                res.send("Order not found")
+            }
         } else {
             res.send('Invalid argrument')
             return
