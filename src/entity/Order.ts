@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, Double, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn, OneToMany, CreateDateColumn } from 'typeorm';
 import { User } from './User';
 import { Deliverer } from './Deliverer';
 import { ItemList } from './ItemList';
@@ -12,10 +12,13 @@ export class Order {
     totalPrice: number;
 
     @Column()
-    hasPaid_user: boolean;
+    hasPaid: boolean;
 
-    @Column()
-    hasPaid_deliverer: boolean;
+    @Column({
+        type: "datetime"
+    })
+    @CreateDateColumn()
+    createdOn: string;
 
     @Column({
         type: 'simple-json',
@@ -23,15 +26,13 @@ export class Order {
     })
     json: any;
 
-    @OneToOne(type => User, user => user.order)
-    @JoinColumn()
+    @ManyToOne(type => User, user => user.order)
     user: User;
 
     @OneToOne(type => Deliverer, deliverer => deliverer.order)
     @JoinColumn()
     deliverer: Deliverer;
 
-    @OneToOne(type => ItemList, itemList => itemList.order)
-    @JoinColumn()
-    itemList: ItemList;
+    @OneToMany(type => ItemList, itemList => itemList.order)
+    itemList: ItemList[];
 }

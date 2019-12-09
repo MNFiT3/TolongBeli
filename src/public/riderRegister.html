@@ -11,10 +11,6 @@
 </head>
 
 <body>
-
-    <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-
     <div class="container">
         <div class="card mt-5 shadow p-3 mb-5 bg-white rounded">
             <div class="card-body">
@@ -23,6 +19,15 @@
                 </div><br />
                 <form action="/action_page.php" method="post">
                     <div class="row">
+                        <!-- input email -->
+                        <div class="col-sm">
+                                <div class="form-group">
+                                    <b>Email</b>
+                                    <input class="form-control" type="text" placeholder="Enter email" name="email"
+                                        required><br />
+                                </div>
+                            </div>
+                        <!-- input email -->
                         <!-- input username -->
                         <div class="col-sm">
                             <div class="form-group">
@@ -41,11 +46,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <!-- input phone -->
+                        <!-- input full name -->
                         <div class="col-sm">
                             <div class="form-group">
-                                <b>Phone Number</b>
-                                <input class="form-control" type="text" placeholder="eg. 01136177261" name="phone"
+                                <b>Full name</b>
+                                <input class="form-control" type="text" placeholder="Enter full IC name" name="fname"
                                     required>
                             </div>
                         </div>
@@ -59,6 +64,14 @@
                         </div>
                     </div>
                     <div class="row">
+                        <!-- input phone number -->
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <b>Phone Number</b>
+                                <input class="form-control" type="text" placeholder="eg. 01136177261" name="phone"
+                                    required><br />
+                            </div>
+                        </div>
                         <!-- input plate number -->
                         <div class="col-sm">
                             <div class="form-group">
@@ -67,40 +80,20 @@
                                     required><br />
                             </div>
                         </div>
-                        <!-- upload image of rider -->
-                        <div class="col-sm">
-                            <b>Rider Picture</b>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                                </div>
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="inputGroupFile01"
-                                        aria-describedby="inputGroupFileAddon01">
-                                    <label class="custom-file-label" for="inputGroupFile01">Full face only</label>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <!--https://mdbootstrap.com/docs/jquery/forms/file-input-->
-                    <!-- upload image of vehicle -->
                     <div class="row">
+                        <!-- input license number -->
                         <div class="col-sm">
-                            <b>Vehicle Picture</b>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                                </div>
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="inputGroupFile01"
-                                        aria-describedby="inputGroupFileAddon01">
-                                    <label class="custom-file-label" for="inputGroupFile01">Include plate number</label>
-                                </div>
+                            <div class="form-group">
+                                <b>License ID number</b>
+                                <input class="form-control" type="text" placeholder="Located at the back of license ID" name="license"
+                                    required><br />
                             </div>
                         </div>
-                        <!-- upload image of license -->
+                        <!-- upload image of rider -->
                         <div class="col-sm">
-                            <b>License Picture</b>
+                            <b>Profile Picture</b>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
@@ -108,7 +101,7 @@
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="inputGroupFile01"
                                         aria-describedby="inputGroupFileAddon01">
-                                    <label class="custom-file-label" for="inputGroupFile01">Front only</label>
+                                    <label class="custom-file-label" for="inputGroupFile01">Face only</label>
                                 </div>
                             </div>
                         </div>
@@ -118,7 +111,7 @@
                             <div class="text-right">
                                 <a href="index.html" class="btn theme-color-0 btn-lg active" role="button"
                                     aria-pressed="true">Back</a>
-                                <button class="btn theme-color-0 btn-lg active" type="submit">Register</button>
+                                <button class="btn theme-color-0 btn-lg active" type="button" id="btn-submit">Register</button>
                             </div>
                         </div>
                     </div>
@@ -126,8 +119,17 @@
             </div>
         </div>
     </div>
-
-    </form>
+    <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/controller/UtilsController.js"></script>
+    <script type="text/javascript" src="assets/controller/AccountController.js"></script>
+    <script>
+        document.getElementById('btn-submit').addEventListener('click', () => {
+            new AccountController().register('form', 'deliverer', (result) => {
+                alert(result)
+            })
+        })
+    </script>
 </body>
 
 </html>

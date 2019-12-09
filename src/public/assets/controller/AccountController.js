@@ -6,30 +6,41 @@ class AccountController {
         var data = {};
         var formData = jsonForm($(formName).serializeArray());
 
-        data.username = formData.uname;
-        data.password = formData.psw;
-        data.phone = formData.num || formData.phone;
-        data.address = formData.address;
-        data.address = formData.address;
-        data.ic = formData.ic;
-        data.address = formData.address;
-        data.plateNumber = formData.plate;
+        //Temp until frontend impliment email form
+        data.email = formData.email || Math.random().toString();
+
+        data.scope = scope
+        data.username = formData.uname
+        data.password = formData.psw
+        data.phone = formData.num || formData.phone
+        data.address = formData.addr
+        data.ic = formData.ic
+        data.licenseID = formData.license
+        data.plateNumber = formData.plate
+        data.fullName = formData.fname
 
         //Check the basic requirement
         if(!(data.email && data.password && data.username && data.phone)){
-            res.send("Missing improtant attributes")
+            callback("Missing improtant attributes")
+            return
         }
-        //Check requirement for user 
-        if(!(scope == "user" && data.address)){
-            res.send("Missing user attributes")
+
+        if(scope == "deliverer"){
+            if(!(data.plateNumber && data.ic &&  data.fullName && data.licenseID)){
+                callback("Missing deliverer attributes")
+                return
+            }
+        }else{
+            if(!(data.address)){
+                callback("Missing user attributes")
+                return
+            }
         }
-        //Check requirement for deliverer
-        if(!(scope == "deliverer" && data.plateNumber && data.ic)){
-            res.send("Missing user attributes")
-        }
+        
 
         serv.httpPost(ACCOUNT_ENDPOINT + '/register', data, (err, result) => {
             if(err) return;
+            result = JSON.parse(result.response)
             alert(result);
         });
     }
@@ -38,17 +49,19 @@ class AccountController {
         var data = {};
         var formData = jsonForm($(formName).serializeArray());
 
-        data.username = formData.uname;
+        data.email = formData.uname;
         data.password = formData.psw;
 
-        if(!(data.username && data.password)){
+        if(!(data.email && data.password)){
             alert("Missing improtant attributes");
             return;
         }
 
-        serv.httpPost('/test/post', data, (err, result) => {
+        serv.httpPost('/account/login', data, (err, result) => {
             if(err) return;
-            alert(result);
+            result = JSON.parse(result.response)
+            localStorage.setItem('user', JSON.stringify(result.userData))
+            callback(result.message)
         });
     }
 }

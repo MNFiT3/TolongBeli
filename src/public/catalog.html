@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Catalog</title>
+
+  <link rel="icon" href="tolongBeli2.png">
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+  <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+  <div class="container">
+    <div class="card mt-5 shadow p-3 mb-5 bg-white rounded">
+      <a class="btn-checkout">
+        <button type="button" class="btn btn-danger" onclick="checkout()">Checkout</button>
+      </a>
+      <div class="card-body">
+        <div class="logocontainer" align="center">
+          <img src="tolongBeli1.png" alt="logo" class="logo" width="15%">
+        </div><br />
+        <div class="md-form active-pink active-pink-2 mb-3 mt-0">
+          <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <table class="table" id="table-image">
+                <thead>
+                  <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Price (RM)</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Order</th>
+                  </tr>
+                </thead>
+                <tbody id="gList"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="assets/controller/UtilsController.js"></script>
+  <script type="text/javascript" src="assets/controller/TolongBeliController.js"></script>
+  <script>
+    var cart = {}
+    new TolongBeliController().groceryList("gList", (result) => { })
+
+    const add = (item) => {
+      const itemId = item.value
+      let _item = {
+        name: document.getElementById('item-' + item.value).innerHTML.trim(),
+        price: parseFloat(document.getElementById('price-' + item.value).innerHTML.trim()),
+        qty: parseInt(document.getElementById('qty-' + item.value).value)
+      }
+
+      if (_item.qty == "" || isNaN(_item.qty)) {
+        alert("Item quantity can't be empty")
+        item.checked = false
+
+      } else {
+
+        //add or remove item from cart
+        if (cart[itemId] != undefined) {
+          delete cart[itemId]
+        } else {
+          cart[itemId] = _item
+        }
+      }
+    }
+
+    const checkout = () => {
+      //TODO: Add empty check for cart
+
+      if (confirm("Checkout now?")) {
+        let temp = {
+          createdOn: new Date(),
+          data: cart
+        }
+        localStorage.setItem('groceryItems', JSON.stringify(temp))
+
+        new TolongBeliController().cartCheckout(temp, result => {
+          console.log(result)
+        })
+      }
+    }
+  </script>
+</body>
+
+</html>

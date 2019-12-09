@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { Grocery } from './Grocery';
 import { Order } from './Order';
 
@@ -22,6 +22,6 @@ export class ItemList {
     @ManyToOne(type => Grocery, grocery => grocery.itemList)
     grocery: Grocery;
 
-    @OneToOne(type => Order, order => order.itemList)
+    @ManyToOne(type => Order, order => order.itemList)
     order: Order;
 }

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Logout</title>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <br />
+        <br />
+        <br />
+        <h1>Logging Out...<span id='timer'></span></h1>
+    </div>
+    <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/controller/UtilsController.js"></script>
+    <script type="text/javascript" src="assets/controller/TolongBeliController.js"></script>
+    <script>
+        let element = document.getElementById('timer')
+        let time = 3
+        element.innerHTML = time
+        
+        var interval = setInterval(() => {
+            time--
+            element.innerHTML = time
+            
+            if(time <= 0){
+                clearInterval(interval)
+                localStorage.removeItem('token')
+                window.location.href = 'login.html'
+            }
+        }, 1000)
+
+    </script>
+</body>
+
+</html>

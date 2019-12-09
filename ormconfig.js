@@ -1,33 +1,46 @@
 var dir = 'src';
-if (process.env.NODE_ENV.trim() == 'production') {
-   dir = 'build';
+var extension = '.ts';
+var env = process.env.NODE_ENV.trim();
+var ormconfig = {
+   "synchronize": true,
+   "logging": false
 }
 
-var env = process.env;
-module.exports = {
-   "type": "postgres",
-   "host": env.DB_HOST,
-   "port": env.DB_PORT,
-   "username": env.DB_USER,
-   "password": env.DB_PASS,
-   "database": env.DB_NAME,
-   extra: {
-      ssl: true
-   },
-   "synchronize": true,
-   "logging": false,
-   "entities": [
-      dir + "/entity/**/*.ts"
-   ],
-   "migrations": [
-      dir + "/migration/**/*.ts"
-   ],
-   "subscribers": [
-      dir + "/subscriber/**/*.ts"
-   ],
-   "cli": {
-      "entitiesDir": dir + "/entity",
-      "migrationsDir": dir + "/migration",
-      "subscribersDir": dir + "/subscriber"
-   }
+if (env == 'production') {
+   dir = 'build';
+   extension = '.js';
+
+   ormconfig["type"] = "mysql";
+   ormconfig["host"] = process.env.DB_HOST;
+   ormconfig["port"] = process.env.DB_PORT;
+   ormconfig["username"] = process.env.DB_USERNAME;
+   ormconfig["password"] = process.env.DB_PASSWORD;
+   ormconfig["database"] = process.env.DB_NAME;
+   //ormconfig["extra"] = { ssl: true };
+
+}else{
+   
+   ormconfig["type"] = "mysql";
+   ormconfig["host"] = process.env.DB_HOST;
+   ormconfig["port"] = process.env.DB_PORT;
+   ormconfig["username"] = process.env.DB_USERNAME;
+   ormconfig["password"] = process.env.DB_PASSWORD;
+   ormconfig["database"] = process.env.DB_NAME;
 }
+
+ormconfig["entities"] = [
+   dir + "/entity/**/*" + extension
+];
+ormconfig["migrations"] = [
+   dir + "/migration/**/*" + extension
+];
+ormconfig["subscribers"] = [
+   dir + "/subscriber/**/*" + extension
+];
+ormconfig["cli"] = {
+   "entitiesDir": dir + "/entity",
+   "migrationsDir": dir + "/migration",
+   "subscribersDir": dir + "/subscriber"
+};
+
+module.exports = ormconfig;
