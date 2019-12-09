@@ -157,9 +157,9 @@ class TolongBeliController {
     }
 
     static delivererOpenJob = async (req: Request, res: Response) => {
-        const availJobs = await getRepository(Order).findAndCount({ where: { hasPaid: false, deliverer: null }, relations: ['user'] })
+        const availJobs = await getRepository(Order).find({ where: { hasPaid: false, deliverer: null }, relations: ['user'] })
 
-        availJobs[0].forEach(e => {
+        availJobs.forEach(e => {
             delete e['user']['json']
         })
 

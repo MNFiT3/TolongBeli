@@ -3,6 +3,9 @@ const CHECKOUT_ENDPOINT = '/tolongbeli/checkout';
 const MYORDER_ENDPOINT = '/tolongbeli/order';
 const ADMIN_GROCERY_ENDPOINT = '/admin/grocery';
 const ADMIN_LIST_NEW_DELIVERER = '/admin/deliverer/view';
+const ADMIN_APPROVE_NEW_DELIVERER = '/admin/deliverer/validate';
+const DELIVERER_JOB_LIST = '/tolongbeli/deliverer/job/available';
+const DELIVERER_APPLY_JOB = 'tolongbeli/deliverer/job/apply';
 
 class TolongBeliController {
     
@@ -121,11 +124,56 @@ class TolongBeliController {
                     <td>` + e.json.documents.ic + `</td>
                     <td>` + e.vehicle.plateNumber + `</td>
                     <td>` + e.json.status.message + `</td>
-                    <td><button type='button' class='btn btn-primary' onClick="newDelivererApprove(` + e.id + `)">View</button></td>
+                    <td><button type='button' class='btn btn-primary' onClick="new TolongBeliController().newDelivererApprove('` + e.id + `')">View</button></td>
                 </tr>`
             });
 
             document.getElementById(htmlElement).innerHTML = tableData;
+        });
+    }
+
+    newDelivererApprove = (accountId) => {
+        serv.httpPost(ADMIN_APPROVE_NEW_DELIVERER, {
+            "status":"approve",
+            "delivererID": accountId
+        }, (err, result) => {
+            if(err){
+                alert(err)
+                return
+            }
+
+            alert('Success')
+            location.reload()
+        });
+    }
+
+    delivererAvailJob = (htmlElement) => {
+        serv.httpPost(DELIVERER_JOB_LIST, {
+        }, (err, result) => {
+            if(err){
+                alert(err)
+                return
+            }
+            result = JSON.parse(result.response)
+
+            result.forEach(e => {
+                console.log(e)
+                //<td><button type='button' class='btn btn-primary' onClick="new TolongBeliController().delivererApplyJob('` + e.id + `')">Apply</button></td>
+                //e.id refer to orderId
+            })
+        });
+    }
+
+    delivererApplyJob = (orderId) => {
+        serv.httpPost(DELIVERER_APPLY_JOB, {
+            "orderId" : orderId
+        }, (err, result) => {
+            if(err){
+                alert(err)
+                return
+            }
+            alert('Success')
+            location.reload()
         });
     }
 }
