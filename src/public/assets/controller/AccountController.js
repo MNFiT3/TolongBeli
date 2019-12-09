@@ -40,7 +40,7 @@ class AccountController {
 
         serv.httpPost(ACCOUNT_ENDPOINT + '/register', data, (err, result) => {
             if (err) return;
-            result = JSON.parse(result.response)
+            result = result.response
             alert(result);
         });
     }
