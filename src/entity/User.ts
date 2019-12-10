@@ -7,10 +7,8 @@ export class User {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column({
-        type: 'simple-json'
-    })
-    address: any;
+    @Column()
+    address: string;
 
     @Column({
         type: 'simple-json',
