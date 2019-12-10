@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Order Details</title>
+
+    <link rel="icon" href="tolongBeli2.png">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <div>
+        <div class="container">
+            <div class="text-center card mt-5 shadow p-3 mb-5 bg-white rounded">
+                <a href="user_myorder.html" class="btn theme-color-0 btn-lg active" role="button"
+                    aria-pressed="true">Back
+                </a><br />
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table" id="table-image">
+                                <thead>
+                                    <tr>
+                                        <h1>Ordered Items</h1><br />
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Total Price (RM)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="data"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/controller/UtilsController.js"></script>
+    <script type="text/javascript" src="assets/controller/TolongBeliController.js"></script>
+    <script>
+        var url = window.location.href
+        var urlParams = new URL(url)
+        var oid = urlParams.searchParams.get("id")
+        new TolongBeliController().myOrderDetails('data', oid)
+    </script>
+</body>
+
+</html>

@@ -26,5 +26,6 @@ export class Deliverer {
     account: Account;
 
     @OneToOne(type => Order, order => order.deliverer)
+    @JoinColumn()
     order: Order;
 }
