@@ -8,14 +8,14 @@ const DELIVERER_JOB_LIST = '/tolongbeli/deliverer/job/available';
 const DELIVERER_APPLY_JOB = 'tolongbeli/deliverer/job/apply';
 
 class TolongBeliController {
-    
+
     groceryList = (htmlElement, callback) => {
         var data = {
             option: "byStatus_listed",
             itemID: ""
         };
         serv.httpPost(GROCERY_ENDPOINT + '/list', data, (err, result) => {
-            if(err) return;
+            if (err) return;
             result = JSON.parse(result.response)
             var tableData = "";
             result["lists"].forEach((e, i) => {
@@ -25,9 +25,9 @@ class TolongBeliController {
                     <td class="w-25">
                         <img src="` + e.json.image + `" class="img-fluid img-thumbnail" alt="image">
                     </td>
-                    <td id='item-`+e.id+`'>` + e.name + `
+                    <td id='item-`+ e.id + `'>` + e.name + `
                     </td>
-                    <td id='price-`+e.id+`'>`+ priceStr +`</td>
+                    <td id='price-`+ e.id + `'>` + priceStr + `</td>
                     <td>
                         <input class="form-control input-lg" type="number" min="1" id="qty-` + e.id + `">
                     </td>
@@ -50,18 +50,18 @@ class TolongBeliController {
         grocery.name = formData.name
         grocery.price = formData.price
         grocery.category = formData.category
-        grocery.image = (formData.urlImage != "")? formData.urlImage : 'https://via.placeholder.com/300'
+        grocery.image = (formData.urlImage != "") ? formData.urlImage : 'https://via.placeholder.com/300'
         grocery.desc = formData.desc
 
         serv.httpPost(ADMIN_GROCERY_ENDPOINT + '/add', grocery, (err, result) => {
-            if(err) return;
+            if (err) return;
             callback(result)
         });
     }
 
     cartCheckout = (cartObj, callback) => {
         serv.httpPost(CHECKOUT_ENDPOINT, cartObj, (err, result) => {
-            if(err) return;
+            if (err) return;
             result = result.response
             callback(result)
         });
@@ -73,20 +73,20 @@ class TolongBeliController {
             value: ""
         };
         serv.httpPost(MYORDER_ENDPOINT, data, (err, result) => {
-            if(err) return;
+            if (err) return;
             result = JSON.parse(result.response)
             var tableData = "";
             result.forEach((e, i) => {
                 const price = e.totalPrice + ''
                 const priceStr = price.substr(0, price.length - 2) + '.' + price.substr(price.length - 2)
                 tableData += `<tr>
-                    <th scope="row">`+ (i + 1) +`</th>
+                    <th scope="row">`+ (i + 1) + `</th>
                     <td class="w-25">
-                        `+ e.createdOn +`
+                        `+ e.createdOn + `
                     </td>
                     <td>RM ` + priceStr + `
                     </td>
-                    <td><button type='button' class='btn btn-primary' onClick="window.location.href='user_orderDetail.html?id=`+ e.id +`'">View</button></td>
+                    <td><button type='button' class='btn btn-primary' onClick="window.location.href='user_orderDetail.html?id=`+ e.id + `'">View</button></td>
                 </tr>`
             });
 
@@ -100,26 +100,39 @@ class TolongBeliController {
             "option": "byId",
             "value": orderId
         }, (err, result) => {
-            if(err) return;
-            result = result.response
+            if (err) return;
+            result = JSON.parse(result.response)
 
-            document.getElementById(htmlElement).innerHTML = result;
+            console.log(result)
+            var tableData = "";
+            result.itemList.forEach((e, i) => {
+                tableData += `<tr>
+                    <td class="w-25">
+                        <img src="` + e.grocery.json.image + `" class="img-fluid img-thumbnail" alt="image">
+                    </td>
+                    <td>` + e.grocery.name + `</td>
+                    <td>` + e.quantity + `</td>
+                    <td>` + e.totalPrice + `</td>
+                </tr>`
+            });
+
+            document.getElementById(htmlElement).innerHTML = tableData;
         });
     }
 
     newDeliverer = (htmlElement) => {
         serv.httpPost(ADMIN_LIST_NEW_DELIVERER, {
-            "option":"byApproval_false",
+            "option": "byApproval_false",
             "delivererID": ""
         }, (err, result) => {
-            if(err) return;
+            if (err) return;
             result = JSON.parse(result.response)
 
             console.log(result)
             var tableData = "";
             result.lists.forEach((e, i) => {
                 tableData += `<tr>
-                    <td class="w-25"> `+ e.account.username +`</td>
+                    <td class="w-25"> `+ e.account.username + `</td>
                     <td>` + e.account.email + `</td>
                     <td>` + e.json.documents.ic + `</td>
                     <td>` + e.vehicle.plateNumber + `</td>
@@ -134,10 +147,10 @@ class TolongBeliController {
 
     newDelivererApprove = (accountId) => {
         serv.httpPost(ADMIN_APPROVE_NEW_DELIVERER, {
-            "status":"approve",
+            "status": "approve",
             "delivererID": accountId
         }, (err, result) => {
-            if(err){
+            if (err) {
                 alert(err)
                 return
             }
@@ -150,7 +163,7 @@ class TolongBeliController {
     delivererAvailJob = (htmlElement) => {
         serv.httpPost(DELIVERER_JOB_LIST, {
         }, (err, result) => {
-            if(err){
+            if (err) {
                 alert(err)
                 return
             }
@@ -166,9 +179,9 @@ class TolongBeliController {
 
     delivererApplyJob = (orderId) => {
         serv.httpPost(DELIVERER_APPLY_JOB, {
-            "orderId" : orderId
+            "orderId": orderId
         }, (err, result) => {
-            if(err){
+            if (err) {
                 alert(err)
                 return
             }
