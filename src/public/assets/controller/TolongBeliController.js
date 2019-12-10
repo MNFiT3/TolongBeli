@@ -75,6 +75,7 @@ class TolongBeliController {
         serv.httpPost(MYORDER_ENDPOINT, data, (err, result) => {
             if (err) return;
             result = JSON.parse(result.response)
+            console.log(result)
             var tableData = "";
             result.forEach((e, i) => {
                 const price = e.totalPrice + ''
@@ -84,7 +85,7 @@ class TolongBeliController {
                     <td class="w-25">
                         `+ e.createdOn + `
                     </td>
-                    <td>RM ` + priceStr + `
+                    <td>` + e.totalPrice + `
                     </td>
                     <td><button type='button' class='btn btn-primary' onClick="window.location.href='user_orderDetail.html?id=`+ e.id + `'">View</button></td>
                 </tr>`
