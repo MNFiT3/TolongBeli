@@ -5,7 +5,7 @@ const ADMIN_GROCERY_ENDPOINT = '/admin/grocery';
 const ADMIN_LIST_NEW_DELIVERER = '/admin/deliverer/view';
 const ADMIN_APPROVE_NEW_DELIVERER = '/admin/deliverer/validate';
 const DELIVERER_JOB_LIST = '/tolongbeli/deliverer/job/available';
-const DELIVERER_APPLY_JOB = 'tolongbeli/deliverer/job/apply';
+const DELIVERER_APPLY_JOB = '/tolongbeli/deliverer/job/apply';
 
 class TolongBeliController {
     
@@ -114,8 +114,6 @@ class TolongBeliController {
         }, (err, result) => {
             if(err) return;
             result = JSON.parse(result.response)
-
-            console.log(result)
             var tableData = "";
             result.lists.forEach((e, i) => {
                 tableData += `<tr>
@@ -147,7 +145,7 @@ class TolongBeliController {
         });
     }
 
-    delivererAvailJob = (htmlElement) => {
+    delivererAvailJob = (htmlElement, htmlElement2) => {
         serv.httpPost(DELIVERER_JOB_LIST, {
         }, (err, result) => {
             if(err){
@@ -155,12 +153,30 @@ class TolongBeliController {
                 return
             }
             result = JSON.parse(result.response)
-
-            result.forEach(e => {
-                console.log(e)
-                //<td><button type='button' class='btn btn-primary' onClick="new TolongBeliController().delivererApplyJob('` + e.id + `')">Apply</button></td>
-                //e.id refer to orderId
+            var tableData = ''
+            result.availJobs.forEach((e, i) => {
+                tableData += `<tr>
+                    <td class="w-25"> `+ (i + 1)+`</td>
+                    <td> `+ e.createdOn +`</td>
+                    <td>` + e.totalPrice + `</td>
+                    <td>` + e.user.address +  `</td>
+                    <td><button type='button' class='btn btn-primary' onClick="new TolongBeliController().delivererApplyJob('` + e.id + `')">Apply</button></td>
+                    </tr>`
             })
+
+            var tableData2 = ''
+            result.acceptedJobs.forEach((e, i) => {
+                tableData2 += `<tr>
+                    <td class="w-25"> `+ (i + 1)+`</td>
+                    <td> `+ e.createdOn +`</td>
+                    <td>` + e.totalPrice + `</td>
+                    <td>` + e.user.address +  `</td>
+                    <td>-</td>
+                    </tr>`
+            })
+
+            document.getElementById(htmlElement).innerHTML = tableData;
+            document.getElementById(htmlElement2).innerHTML = tableData2;
         });
     }
 

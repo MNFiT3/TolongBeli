@@ -27,6 +27,7 @@ export class Order {
     json: any;
 
     @ManyToOne(type => User, user => user.order)
+    @JoinColumn()
     user: User;
 
     @OneToOne(type => Deliverer, deliverer => deliverer.order)
