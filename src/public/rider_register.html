@@ -11,7 +11,6 @@
 </head>
 
 <body>
-
     <div class="container">
         <div class="card mt-5 shadow p-3 mb-5 bg-white rounded">
             <div class="card-body">
@@ -21,14 +20,7 @@
                 <form action="/action_page.php" method="post">
                     <div class="row">
                         <!-- input email -->
-                        <div class="col-sm">
-                                <div class="form-group">
-                                    <b>Email</b>
-                                    <input class="form-control" type="text" placeholder="Enter email" name="email"
-                                        required><br />
-                                </div>
-                            </div>
-                        <!-- input email -->
+                        <!-- input username -->
                         <div class="col-sm">
                             <div class="form-group">
                                 <b>Username</b>
@@ -46,30 +38,67 @@
                         </div>
                     </div>
                     <div class="row">
-                        <!-- input number -->
+                        <!-- input full name -->
                         <div class="col-sm">
                             <div class="form-group">
-                                <b>Phone Number</b>
-                                <input class="form-control" type="text" placeholder="Enter phone number" name="num"
+                                <b>Full name</b>
+                                <input class="form-control" type="text" placeholder="Enter full IC name" name="fname"
                                     required>
                             </div>
                         </div>
-                        <!-- input address -->
+                        <div class="col-sm">
+                            <!-- input IC -->
+                            <div class="form-group">
+                                <b>Identification Card (IC)</b>
+                                <input class="form-control" type="text" placeholder="eg. 123456161342" name="ic"
+                                    required><br />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- input email -->
                         <div class="col-sm">
                             <div class="form-group">
-                                <b>Home Address</b>
-                                <textarea class="form-control" name="addr" placeholder="Enter full address"
-                                    required></textarea>
+                                <b>Email</b>
+                                <input class="form-control" type="text" placeholder="Enter email" name="email"
+                                    required><br />
+                            </div>
+                        </div>
+                        <!-- input phone number -->
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <b>Phone Number</b>
+                                <input class="form-control" type="text" placeholder="eg. 01136177261" name="phone"
+                                    required><br />
+                            </div>
+                        </div>
+                    </div>
+                    <!--https://mdbootstrap.com/docs/jquery/forms/file-input-->
+                    <div class="row">
+                        <!-- input license number -->
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <b>License ID Number</b>
+                                <input class="form-control" type="text" placeholder="Located at the back of license ID"
+                                    name="license" required><br />
+                            </div>
+                        </div>
+                        <!-- input plate number -->
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <b>Vehicle Plate Number</b>
+                                <input class="form-control" type="text" placeholder="eg. WWW1234" name="plate"
+                                    required><br />
                             </div>
                         </div>
                     </div><br />
-                    <!-- button back and register -->
                     <div class="row">
                         <div class="col-sm">
                             <div class="text-right">
                                 <a href="index.html" class="btn theme-color-0 btn-lg active" role="button"
                                     aria-pressed="true">Back</a>
-                                <button class="btn theme-color-0 btn-lg active" type="button" id="btn-submit">Register</button>
+                                <button class="btn theme-color-0 btn-lg active" type="button"
+                                    id="btn-submit">Register</button>
                             </div>
                         </div>
                     </div>
@@ -77,17 +106,15 @@
             </div>
         </div>
     </div>
-
-    </form>
-    
     <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="assets/controller/UtilsController.js"></script>
     <script type="text/javascript" src="assets/controller/AccountController.js"></script>
     <script>
         document.getElementById('btn-submit').addEventListener('click', () => {
-            new AccountController().register('form', 'user', (result) => {
+            new AccountController().register('form', 'deliverer', (result) => {
                 alert(result)
+                window.location.href = 'login.html'
             })
         })
     </script>

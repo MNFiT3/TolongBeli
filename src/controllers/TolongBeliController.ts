@@ -6,6 +6,7 @@ import { User } from "../entity/User";
 import { ItemList } from "../entity/ItemList";
 import { Account } from "../entity/Account";
 import { Deliverer } from "../entity/Deliverer";
+import { IsNotEmpty } from "class-validator";
 
 class TolongBeliController {
 
@@ -101,7 +102,6 @@ class TolongBeliController {
 
     static myOrder = async (req: Request, res: Response) => {
         const {
-            accountId,
             option,
             value
         } = req.body
@@ -112,19 +112,23 @@ class TolongBeliController {
         var account = await getRepository(Account).findOneOrFail({
             relations: ['user'],
             where: {
-                id: accountId || jwt.uid
+                id: jwt.uid
             }
         })
         var data
 
         if (option == 'all') {
-            data = await getRepository(Order).find({
-                where: {
-                    user: {
-                        id: account.user.id
-                    },
-                }
-            })
+            try {
+                data = await getRepository(Order).find({
+                    where: {
+                        user: {
+                            id: account.user.id
+                        },
+                    }
+                })
+            } catch (error) {
+                res.send("Cant find orders")
+            }
         } else if (option == 'byId') {
 
             if (!value) {
@@ -132,15 +136,19 @@ class TolongBeliController {
                 return
             }
 
-            data = await getRepository(Order).findOneOrFail({
-                relations: ['itemList', 'itemList.grocery'],
-                where: {
-                    user: {
-                        id: account.user.id
-                    },
-                    id: value
-                }
-            })
+            try {
+                data = await getRepository(Order).findOneOrFail({
+                    relations: ['itemList', 'itemList.grocery'],
+                    where: {
+                        user: {
+                            id: account.user.id
+                        },
+                        id: value
+                    }
+                })
+            } catch (error) {
+                res.send("Order not found")
+            }
         } else {
             res.send('Invalid argrument')
             return
@@ -150,13 +158,17 @@ class TolongBeliController {
     }
 
     static delivererOpenJob = async (req: Request, res: Response) => {
-        const availJobs = await getRepository(Order).findAndCount({ where: { hasPaid: false, deliverer: null }, relations: ['user'] })
-
-        availJobs[0].forEach(e => {
+        const jwt = res.locals.jwtPayload
+        const deliverer = await getRepository(Deliverer).findOneOrFail({ where: { account: { id: jwt.uid}}})
+        const acceptedJobs = await getRepository(Order).find({ where: { hasPaid: false, deliverer: deliverer }, relations: ['user'] })
+        const availJobs = await getRepository(Order).find({ where: { hasPaid: false, deliverer: null }, relations: ['user'] })
+        availJobs.forEach(e => {
             delete e['user']['json']
         })
-
-        res.json(availJobs)
+        res.json({
+            availJobs,
+            acceptedJobs
+        })
     }
 
     static delivererAcceptJob = async (req: Request, res: Response) => {
@@ -173,6 +185,7 @@ class TolongBeliController {
         try {
             applyJob = await getRepository(Order).findOneOrFail({ where: { id: orderId } })
         } catch (error) {
+            console.log(error)
             res.send('Error occured applying the job')
             return
         }
@@ -190,6 +203,7 @@ class TolongBeliController {
         try {
             await getRepository(Order).save(applyJob)
         } catch (error) {
+            console.log(error)
             res.send('Error applying job')
             return
         }
@@ -208,20 +222,20 @@ class TolongBeliController {
 
         var order: Order
         try {
-            order = await getRepository(Order).findOneOrFail({ where: { id: orderId}})
+            order = await getRepository(Order).findOneOrFail({ where: { id: orderId } })
         } catch (error) {
             res.send('Error finding order')
             return
         }
 
-        if(order.hasPaid){
+        if (order.hasPaid) {
             res.send('Order already paid')
             return
         }
 
         order.hasPaid = true
 
-        if(order.json == null){
+        if (order.json == null) {
             order.json = {}
         }
 

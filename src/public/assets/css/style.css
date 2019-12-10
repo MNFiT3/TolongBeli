@@ -38,5 +38,5 @@ body {
 .btn-checkout{
     position: relative;
     z-index: 99;
-    float: right;
+    float: center;
 }

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin</title>
+
+    <link rel="icon" href="tolongBeli2.png">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="card mt-5 shadow p-3 mb-5 bg-white rounded">
+            <a href="admin_index.html" class="btn theme-color-0 btn-lg active" role="button" aria-pressed="true">Back
+            </a><br />
+            <div class="card-body">
+                <h1 class="text-center">Grocery Items List</h1><br />
+
+                <div class="text-center">
+                    <a href="admin_addGrocery.html" class="btn theme-color-0 active" role="button"
+                        aria-pressed="true">Add Items
+                    </a><br />
+                </div><br />
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table" id="table-image">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Items</th>
+                                        <th scope="col">Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="gList"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/controller/UtilsController.js"></script>
+    <script type="text/javascript" src="assets/controller/TolongBeliController.js"></script>
+</body>
+
+</html>
